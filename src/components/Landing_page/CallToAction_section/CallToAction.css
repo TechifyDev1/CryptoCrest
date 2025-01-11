@@ -1,0 +1,40 @@
+.call-to-action-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    background-color: var(--primary-color);
+    width: 75%;
+    margin: auto;
+    border-radius: 15px;
+    margin-top: 2rem;
+
+
+    .middle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+
+
+        .action-btn {
+            width: auto;
+            height: auto;
+            padding: 1rem 2rem;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transition: all 0.3s ease-in;
+            cursor: pointer;
+            font-size: large;
+
+
+            &:hover {
+                background-color: var(--primary-color);
+            }
+        }
+    }
+}
