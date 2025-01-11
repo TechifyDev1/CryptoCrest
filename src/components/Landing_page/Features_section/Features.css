@@ -9,6 +9,11 @@
 
     .title {
         font-size: xx-large;
+
+        @media (max-width: 768px) {
+            text-align: center !important;
+            font-size: 1.7rem;
+        }
     }
 
     .features {
@@ -37,6 +42,15 @@
             .descriptions {
                 height: 50%;
             }
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 2rem;
         }
     }
 }

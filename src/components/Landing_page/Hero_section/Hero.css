@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 5%;
+    margin-top: 2rem;
 
     @media screen and (max-width: 768px) {
         flex-direction: column;
@@ -22,6 +23,8 @@
         @media screen and (max-width: 768px) {
             width: 100%;
             padding: 0;
+            align-items: center;
+            text-align: center;
         }
 
         h1 {
@@ -30,7 +33,7 @@
             margin-bottom: 1rem;
 
             @media screen and (max-width: 768px) {
-                font-size: 2rem;
+                font-size: 1.7rem;
             }
         }
 
@@ -67,7 +70,7 @@
         align-items: center;
 
         @media screen and (max-width: 768px) {
-            width: 100%;
+            display: none;
         }
 
         img {

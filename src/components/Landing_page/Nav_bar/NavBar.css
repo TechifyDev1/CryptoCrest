@@ -49,6 +49,10 @@
                 color: var(--primary-color);
                 border: 1px solid var(--primary-color);
             }
+
+            @media (max-width: 768px) {
+                display: none;
+            }
         }
     }
 }
