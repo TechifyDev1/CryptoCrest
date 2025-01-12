@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     padding: 0 2vw;
 
@@ -16,12 +16,20 @@
             height: 100%;
             object-fit: contain;
         }
+
+        @media (max-width: 768px) {
+            display: none;
+        }
     }
 
     .signup-form {
         display: flex;
         flex-direction: column;
-        width: 50%;
+        width: 40%;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
 
         .signup-nav {
             width: 100%;
@@ -29,15 +37,31 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 5%;
             color: var(--text-color);
             font-weight: 500;
             background-color: transparent;
             border-radius: 3rem;
-            border: 1px solid var(--secondary-color);
+            border: 1px double var(--secondary-color);
+            margin-bottom: 1rem;
+
+            .signin {
+                background-color: var(--bg);
+                padding: 1rem;
+            }
+
+            .signin,
+            .signup {
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 30px;
+                height: 100%;
+            }
 
             .signup {
-                background-color: var(--bg);
+                background-color: var(--secondary-color);
+                padding: 1rem;
             }
         }
 
@@ -87,7 +111,6 @@
                 position: absolute;
                 left: 1rem;
                 fill: none;
-
             }
         }
 
@@ -98,7 +121,7 @@
             align-items: center;
             justify-content: center;
             color: #fff;
-            background-color: var(--primary-color);
+            background-color: var(--secondary-color);
             border: 0.2rem double var(--bg);
             border-radius: 3rem;
             margin: 1rem 0;
@@ -113,15 +136,18 @@
 
         .signup-google {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: center;
             padding: 0.5rem 1rem;
-            background-color: var(--primary-color);
+            background-color: var(--secondary-color);
             font-weight: 400;
             border: none;
             border-radius: 3rem;
             width: 50%;
             cursor: pointer;
             margin: auto;
+
+
         }
     }
 }
