@@ -1,0 +1,23 @@
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 20%;
+    position: fixed;
+
+    .content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 100%;
+
+
+        .menu-icon {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+}

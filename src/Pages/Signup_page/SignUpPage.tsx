@@ -19,7 +19,7 @@ const SignUpPage: React.FC = () => {
                         <Link to='/login' style={{ textDecoration: 'none', color: 'var(--text-color)' }}> Login </Link>
                     </div>
                 </div>
-                <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Get started! And manage your cryptos efficiently</h2>
+                <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Let’s Get Started! Join CryptoCrest Now</h2>
                 <div className="form-grp">
                     <HiOutlineUser className="signup-icon" />
                     <input type="text" name="username" id="username" placeholder="Unique username" />
@@ -36,7 +36,7 @@ const SignUpPage: React.FC = () => {
                 <div className="alternative">Or Signup with</div>
                 <button className="signup-google">
                     <FcGoogle size={25} className="google-icon" />
-                    <h2>Google</h2>
+                    <h2>oogle</h2>
                 </button>
             </form>
         </div>

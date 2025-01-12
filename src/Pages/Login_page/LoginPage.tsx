@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
                         Login
                     </div>
                 </div>
-                <h2 style={{ textAlign: 'center', margin: '1rem' }}>Welcome back!</h2>
+                <h2 style={{ textAlign: 'center', margin: '1rem' }}>Welcome Back! Dive Into Your Crypto Insights</h2>
                 <div className="form-grp">
                     <HiOutlineUser className="icons" />
                     <input type="text" name="username" id="username" className="username" placeholder="Enter your user name" />
