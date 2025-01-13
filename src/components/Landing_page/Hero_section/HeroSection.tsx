@@ -1,8 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import HeroImg from "../../../assets/landing_page/hero_img.svg";
 import "./Hero.css";
 
 const HeroSection: React.FC = () => {
+    const navigate = useNavigate();
+    const gotoSignUp = () => {
+        navigate('/signup')
+    }
     return (
         <div className="HeroSection">
             <div className="description">
@@ -12,7 +17,7 @@ const HeroSection: React.FC = () => {
                     <br />
                     Perfect for enthusiasts and professionals alike, CryptoCrest makes crypto expense tracking effortless and secure.
                 </p>
-                <button>Get Started</button>
+                <button onClick={() => gotoSignUp()}>Get Started</button>
             </div>
             <div className="hero-img-div">
                 <img src={HeroImg} alt="Hero Section" />
