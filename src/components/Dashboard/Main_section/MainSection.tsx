@@ -1,9 +1,10 @@
 import React from 'react';
+import CryptoChart from '../../Helpers/Chart/Chart';
 import './Main.css';
 const MainSection: React.FC = () => {
     return (
         <div className="main-section">
-            <h1>Main Section</h1>
+            <CryptoChart />
         </div>
     )
 }
