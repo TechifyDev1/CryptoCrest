@@ -8,7 +8,7 @@ const DashboardPage: React.FC = () => {
     return (
         <div>
             <NavBar togglenav={setToggleNav} />
-            <SideBar currentpage="page" toggleNav={toggleSideBar} />
+            <SideBar currentpage="dashboard" toggleNav={toggleSideBar} />
             <MainSection />
         </div>
     );

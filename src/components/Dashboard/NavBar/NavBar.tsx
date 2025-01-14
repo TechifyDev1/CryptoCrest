@@ -7,7 +7,7 @@ const NavBar: React.FC<{ togglenav: Dispatch<SetStateAction<boolean>> }> = ({ to
     return (
         <nav className="top-nav">
             <div onClick={() => togglenav(prev => !prev)} className="menu-icon">
-                <FaBarsStaggered size={25} />
+                <FaBarsStaggered size={25} style={{ color: 'var(--primary-color)' }} />
             </div>
             <div className="profile-info">
                 <div className="profile-image">

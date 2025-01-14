@@ -1,0 +1,27 @@
+.overview-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    align-items: center;
+    background-color: var(--bg);
+
+    .charts-container {
+        display: flex;
+        gap: 1rem;
+
+        .chart {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 0;
+            border-right: 1px solid var(--shade);
+
+            div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}

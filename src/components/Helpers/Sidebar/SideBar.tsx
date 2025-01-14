@@ -10,7 +10,7 @@ const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ curren
             </div>
             <div className="content">
                 <ul className="nav-links">
-                    <li>
+                    <li style={{ backgroundColor: currentpage === 'dashboard' ? 'var(--primary-color)' : '' }}>
                         <MdDashboard size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>DashBoard</p>
                     </li>

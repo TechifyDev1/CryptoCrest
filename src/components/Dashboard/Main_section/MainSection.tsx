@@ -1,10 +1,12 @@
 import React from 'react';
-import CryptoChart from '../../Helpers/Chart/Chart';
+import HighlitsSection from './Highlights_section/HighlightSection';
 import './Main.css';
+import OverviewContainer from './Overview_section/OverviewContainer';
 const MainSection: React.FC = () => {
     return (
         <div className="main-section">
-            <CryptoChart />
+            <OverviewContainer />
+            <HighlitsSection />
         </div>
     )
 }

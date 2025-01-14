@@ -1,0 +1,8 @@
+.highlights-section {
+    display: flex;
+    width: 100%;
+    padding: 3rem 2rem;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+}

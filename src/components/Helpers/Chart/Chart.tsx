@@ -40,16 +40,22 @@ const CryptoChart: React.FC = () => {
                 name: "Bitcoin",
                 type: "line",
                 data: [30000, 32000, 35000, 28000, 30000, 31000],
-                smooth: true, // Makes the line smooth
+                smooth: false, // Makes the line smooth
+            },
+            {
+                name: 'ETH',
+                type: 'bar',
+                data: [400, 1222, 3432, 2345, 2334, 45678],
+                smooth: true,
             },
         ],
     };
 
     return (
-        <div style={{ height: "100%", width: "100%" }} ref={containerRef}>
+        <div style={{ height: "50%", width: "50%", display: 'flex', justifyContent: 'center', alignItems: 'center' }} ref={containerRef}>
             {/* Only render the chart after the container is ready */}
             {isReady && (
-                <ReactECharts option={options} style={{ height: 400, width: "100%" }} />
+                <ReactECharts option={options} style={{ height: 200, width: "50%" }} />
             )}
         </div>
     );
