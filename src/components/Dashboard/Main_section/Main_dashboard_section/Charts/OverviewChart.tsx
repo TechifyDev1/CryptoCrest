@@ -17,7 +17,7 @@ const OverviewChart: React.FC<{ option: {} }> = ({ option }) => {
     }, []);
     return (
         <div style={{ height: "50%", width: "auto", display: 'flex', justifyContent: 'center', alignItems: 'center' }} ref={chartContainer}>
-            {isReady ? (<ReactECharts option={option} style={{ height: 100, width: "100%", display: 'flex' }} />) : (<div>Loading...</div>)}
+            {isReady ? (<ReactECharts option={option} style={{ height: 100, width: "100%", display: 'flex' }} />) : (<div>--:--</div>)}
         </div>
     )
 }
