@@ -10,4 +10,5 @@
     background-color: var(--shade);
     padding: 1rem 2rem;
     gap: 2rem;
+    overflow-y: auto;
 }

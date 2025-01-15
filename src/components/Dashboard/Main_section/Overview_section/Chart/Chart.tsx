@@ -1,5 +1,6 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useRef, useState } from 'react';
+import './Chart.css';
 const Chart: React.FC = () => {
     const chartContainer = useRef<HTMLDivElement>(null);
     const [isContainerReady, setIsContainerReady] = useState<boolean>(false);
@@ -24,6 +25,7 @@ const Chart: React.FC = () => {
         },
         tooltip: {
             trigger: "axis",
+            show: false,
         },
         xAxis: {
             type: "category",
@@ -37,8 +39,8 @@ const Chart: React.FC = () => {
         series: [
             {
                 name: 'ETH',
-                type: 'candle-stick',
-                data: [4001, 1222, 3432, 2345, 2334, 4567],
+                type: 'line',
+                data: [4001, 2222, 3432, 2345, 2334, 4567],
                 smooth: true,
             },
         ],
