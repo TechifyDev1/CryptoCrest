@@ -5,15 +5,15 @@ const HighlitsSection: React.FC = () => {
     return (
         <div className="highlights-section">
             <div className="total-income">
-                <span>Total Income</span>
+                <span style={{ fontWeight: 'bold' }}>Total Income</span>
                 <h3>$14, 023</h3>
             </div>
             <div className="ethereum-income">
-                <span>Ethereum wallet</span>
+                <span style={{ fontWeight: 'bold' }}>Ethereum wallet</span>
                 <h3>$14, 023</h3>
             </div>
             <div className="bitcoin-income">
-                <span>Bitcoin wallet</span>
+                <span style={{ fontWeight: 'bold' }}>Bitcoin wallet</span>
                 <h3>$14, 023</h3>
             </div>
         </div>

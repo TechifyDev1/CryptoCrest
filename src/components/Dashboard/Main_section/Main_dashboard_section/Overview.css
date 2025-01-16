@@ -6,9 +6,18 @@
     align-items: center;
     background-color: var(--bg);
 
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
     .charts-container {
         display: flex;
         gap: 1rem;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
 
         .chart {
             display: flex;
@@ -17,11 +26,23 @@
             gap: 0;
             border-right: 1px solid var(--shade);
 
+            @media (max-width: 768px) {
+                border-right: none;
+                border-bottom: 1px solid var(--shade);
+                padding: 0.5rem;
+            }
+
             div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
+        }
+    }
+
+    .header {
+        @media (max-width: 768px) {
+            width: 100%;
         }
     }
 }

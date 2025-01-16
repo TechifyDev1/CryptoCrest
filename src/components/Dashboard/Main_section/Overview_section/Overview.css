@@ -3,4 +3,14 @@
     width: 100%;
     height: auto;
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+        flex-direction: column-reverse;
+    }
+
+    .something {
+        @media (max-width: 768px) {
+            width: 100% !important;
+        }
+    }
 }
