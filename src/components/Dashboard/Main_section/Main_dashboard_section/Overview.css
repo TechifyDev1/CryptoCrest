@@ -17,6 +17,7 @@
 
         @media (max-width: 768px) {
             flex-direction: column;
+            width: 100%;
         }
 
         .chart {
@@ -30,12 +31,18 @@
                 border-right: none;
                 border-bottom: 1px solid var(--shade);
                 padding: 0.5rem;
+                width: 100%;
             }
 
             div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                @media (max-width: 768px) {
+                    flex-direction: column;
+                    width: 100% !important;
+                }
             }
         }
     }
