@@ -1,5 +1,5 @@
 import React from "react";
-import { MdDashboard, MdSettings, MdSwapHoriz } from "react-icons/md";
+import { MdDashboard, MdSettings, MdSwapHoriz, MdWallet } from "react-icons/md";
 import './SideBar.css';
 
 const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ currentpage, toggleNav }) => {
@@ -14,6 +14,10 @@ const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ curren
                     <li style={{ backgroundColor: currentpage === 'dashboard' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
                         <MdDashboard size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>DashBoard</p>
+                    </li>
+                    <li style={{ backgroundColor: currentpage === 'portfolio' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
+                        <MdWallet size={25} />
+                        <p style={{ display: toggleNav ? "block" : "none" }}>Portfolio</p>
                     </li>
                     <li style={{ justifyContent: toggleNav ? '' : 'center' }}>
                         <MdSwapHoriz size={25} />

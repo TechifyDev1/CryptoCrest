@@ -1,0 +1,74 @@
+.recent-transactions {
+    padding: 20px;
+    background-color: var(--bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 16px;
+    }
+
+    .transactions-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .transactions-table {
+        width: 100%;
+        min-width: 600px;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--shade);
+        }
+
+        th {
+            background-color: var(--shade-light);
+            color: var(--primary);
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr {
+            &:hover {
+                background-color: var(--shade-light);
+            }
+
+            &.transaction-buy {
+                td.type {
+                    color: #4caf50;
+                    font-weight: bold;
+                }
+            }
+
+            &.transaction-sell {
+                td.type {
+                    color: #f44336;
+                    font-weight: bold;
+                }
+            }
+
+            &.transaction-transfer {
+                td.type {
+                    color: #ff9800;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .no-transactions {
+        font-size: 1rem;
+        color: var(--text-light);
+        text-align: center;
+        margin-top: 20px;
+    }
+}
