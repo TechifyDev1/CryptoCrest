@@ -55,7 +55,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
             <SummarySection totalTransactions={250} totalFees="$45" balanceChange="+$1,200" />
             <FilterSearchSection />
             <TransactionSection openDetails={setOpenDetails} setChosenTrans={setChosenTrans} transactions={transactions} />
-            <TransactionDetails onClose={() => { setOpenDetails(prev => !prev) }} transaction={chosenTrans} />
+            <TransactionDetails openDetails={openDetails} onClose={() => { setOpenDetails(prev => !prev) }} transaction={chosenTrans} />
         </div>
     );
 }

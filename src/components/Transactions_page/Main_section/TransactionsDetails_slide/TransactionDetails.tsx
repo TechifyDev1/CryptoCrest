@@ -1,3 +1,4 @@
+import { MdCancel } from 'react-icons/md';
 import './Transaction.css';
 
 interface TransactionDetailModalProps {
@@ -11,13 +12,14 @@ interface TransactionDetailModalProps {
         description: string;
     } | undefined;
     onClose: () => void;
+    openDetails: boolean;
 }
 
-const TransactionDetails: React.FC<TransactionDetailModalProps> = ({ transaction, onClose }) => {
+const TransactionDetails: React.FC<TransactionDetailModalProps> = ({ transaction, onClose, openDetails }) => {
     return (
-        <div className="transaction-detail-modal">
+        <div className="transaction-detail-modal" style={{ transform: openDetails ? '' : 'translateX(-100%)' }}>
             <div className="modal-content">
-                <button className="close-btn" onClick={onClose}>X</button>
+                <button className="close-btn" onClick={onClose}><MdCancel color='#dc3545' size={40} /></button>
                 <h2>Transaction Details</h2>
                 <div className="detail-item">
                     <span className="label">Transaction ID:</span>

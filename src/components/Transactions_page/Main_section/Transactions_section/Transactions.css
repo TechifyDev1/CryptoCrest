@@ -39,6 +39,7 @@
                 text-align: left;
                 font-size: 0.9rem;
                 border-bottom: 1px solid var(--secondary-color);
+                cursor: pointer;
 
                 &.status {
                     font-weight: bold;

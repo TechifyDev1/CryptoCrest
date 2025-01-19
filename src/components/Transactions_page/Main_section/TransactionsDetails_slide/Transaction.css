@@ -9,9 +9,10 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    transition: all 0.3s ease-in-out;
 
     .modal-content {
-        background-color: #fff;
+        background-color: var(--bg);
         padding: 2rem;
         border-radius: 8px;
         width: 80%;
@@ -19,8 +20,7 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
         .close-btn {
-            background-color: #dc3545;
-            color: #fff;
+            background-color: transparent;
             border: none;
             border-radius: 50%;
             width: 30px;
@@ -31,14 +31,10 @@
             font-size: 1.5rem;
             cursor: pointer;
 
-            &:hover {
-                background-color: #c82333;
-            }
         }
 
         h2 {
             margin-bottom: 1.5rem;
-            color: #333;
             text-align: center;
         }
 
