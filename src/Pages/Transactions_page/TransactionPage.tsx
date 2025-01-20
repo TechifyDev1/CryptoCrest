@@ -8,7 +8,7 @@ const TransactionPage: React.FC = () => {
     const [toggleNav, setToggleNav] = useState<boolean>(false);
     return (
         <div>
-            <SideBar toggleNav={toggleNav} currentpage="portfolio" />
+            <SideBar toggleNav={toggleNav} currentpage="transaction" />
             <MobileNav />
             <NavBar toggleSideBar={toggleNav} togglenav={setToggleNav} />
             <MainSection toggleSideBar={toggleNav} />

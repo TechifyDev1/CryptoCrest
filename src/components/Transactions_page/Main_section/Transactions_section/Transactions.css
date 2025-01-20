@@ -1,11 +1,14 @@
 .transaction-list {
     width: 100%;
-    overflow-x: auto;
     background-color: var(--bg);
     border: 1px solid var(--secondary-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 
     table {
         width: 100%;

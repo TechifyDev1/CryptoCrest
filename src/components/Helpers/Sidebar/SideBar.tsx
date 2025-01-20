@@ -1,8 +1,10 @@
 import React from "react";
 import { MdDashboard, MdSettings, MdSwapHoriz, MdWallet } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import './SideBar.css';
 
 const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ currentpage, toggleNav }) => {
+    const navigate = useNavigate()
     return (
         <nav className="side-bar" style={{ width: toggleNav ? '' : '10%' }}>
             <div className="logo">
@@ -11,15 +13,15 @@ const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ curren
             </div>
             <div className="content">
                 <ul className="nav-links">
-                    <li style={{ backgroundColor: currentpage === 'dashboard' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
+                    <li onClick={() => navigate('/dashboard')} style={{ backgroundColor: currentpage === 'dashboard' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
                         <MdDashboard size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>DashBoard</p>
                     </li>
-                    <li style={{ backgroundColor: currentpage === 'portfolio' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
+                    <li onClick={() => navigate('/portfolio')} style={{ backgroundColor: currentpage === 'portfolio' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
                         <MdWallet size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>Portfolio</p>
                     </li>
-                    <li style={{ justifyContent: toggleNav ? '' : 'center' }}>
+                    <li onClick={() => navigate('/transactions')} style={{ backgroundColor: currentpage === 'transaction' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
                         <MdSwapHoriz size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>Transactions</p>
                     </li>

@@ -1,0 +1,35 @@
+.analytics-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    h2 {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .charts-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+
+        .chart {
+            flex: 1;
+            width: 100% !important;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
