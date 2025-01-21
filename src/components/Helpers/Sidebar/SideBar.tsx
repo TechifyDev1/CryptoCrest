@@ -25,7 +25,7 @@ const SideBar: React.FC<{ currentpage: string, toggleNav: boolean }> = ({ curren
                         <MdSwapHoriz size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>Transactions</p>
                     </li>
-                    <li style={{ justifyContent: toggleNav ? '' : 'center' }}>
+                    <li onClick={() => navigate('/settings')} style={{ backgroundColor: currentpage === 'settings' ? 'var(--primary-color)' : '', justifyContent: toggleNav ? '' : 'center' }}>
                         <MdSettings size={25} />
                         <p style={{ display: toggleNav ? "block" : "none" }}>Settings</p>
                     </li>
