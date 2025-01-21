@@ -1,5 +1,5 @@
 import ReactECharts from 'echarts-for-react';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Analytics.css';
 
 interface AnalyticsSectionProps {
@@ -7,10 +7,31 @@ interface AnalyticsSectionProps {
     assetDistributionData: { asset: string; value: number }[];
 }
 
-const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({
-    transactionTrendsData,
-    assetDistributionData,
-}) => {
+const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ transactionTrendsData, assetDistributionData }) => {
+    const chartContainer1 = useRef<HTMLDivElement>(null);
+    const chartContainer2 = useRef<HTMLDivElement>(null);
+    const [isReady, setIsReady] = useState<boolean>(false);
+    useEffect(() => {
+        const checkReadiness = (): void => {
+            if (chartContainer1.current && chartContainer2.current) {
+                const { clientWidth, clientHeight } = chartContainer1.current;
+                if (clientHeight > 0 && clientWidth > 0) {
+                    const { clientWidth, clientHeight } = chartContainer2.current!;
+                    if (clientHeight > 0 && clientWidth > 0) {
+                        setIsReady(true);
+                    } else {
+                        setTimeout(checkReadiness, 100);
+                    }
+                } else {
+                    setTimeout(checkReadiness, 100);
+                }
+            } else {
+                setTimeout(checkReadiness, 100);
+            }
+        }
+
+        checkReadiness();
+    }, []);
     const trendsOptions = {
         title: {
             text: 'Transaction Trends',
@@ -68,11 +89,11 @@ const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({
         <div className="analytics-section">
             <h2>Analytics & Insights</h2>
             <div className="charts-container">
-                <div className="chart" style={{ backgroundColor: 'var(--shade)' }}>
-                    <ReactECharts option={trendsOptions} style={{ backgroundColor: 'var(--shade)' }} />
+                <div ref={chartContainer1} className="chart" style={{ backgroundColor: 'var(--shade)' }}>
+                    {isReady ? (<ReactECharts option={trendsOptions} style={{ backgroundColor: 'var(--shade)', width: '100%' }} />) : (<div>--:--</div>)}
                 </div>
-                <div className="chart" style={{ backgroundColor: 'var(--shade)' }}>
-                    <ReactECharts option={distributionOptions} style={{ backgroundColor: 'var(--shade)' }} />
+                <div ref={chartContainer2} className="chart" style={{ backgroundColor: 'var(--shade)' }}>
+                    {isReady ? (<ReactECharts option={distributionOptions} style={{ backgroundColor: 'var(--shade)', width: '100%' }} />) : (<div>--:--</div>)}
                 </div>
             </div>
         </div>
