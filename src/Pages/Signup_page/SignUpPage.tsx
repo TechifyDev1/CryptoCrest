@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { ChangeEvent } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -17,7 +17,7 @@ const SignUpPage: React.FC = () => {
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
         try {
-            const userRef = doc(db, 'users', username);
+            const userRef = doc(db, 'users', username.toLowerCase());
             const userSnap = await getDoc(userRef);
             if (userSnap.exists()) throw new Error('Username already exists, please choose another one');
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -31,6 +31,32 @@ const SignUpPage: React.FC = () => {
             await setDoc(userRef, userInfo);
             console.log('User created successfully');
         } catch (e: any) {
+            console.error(e.message);
+        }
+    }
+    const handleGoogleSignUp = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const { user } = await signInWithPopup(auth, provider);
+            if (!user) throw new Error('Unable to sign you up, please try again');
+            await updateProfile(user, { displayName: user.email?.split('@')[0] });
+            const email = user.email;
+            const userId = user.uid;
+            const username = email?.split('@')[0] as string;
+            const userRef = doc(db, 'users', username?.toLowerCase());
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) throw new Error('You already have an account, please login');
+            const userInfo = {
+                username,
+                email,
+                userId,
+            }
+            await setDoc(userRef, userInfo);
+            console.log('User created successfully');
+        } catch (e: any) {
+            if (e.message === 'You already have an account, please login') { // Sign out the user if they already have an account
+                await auth.signOut();
+            }
             console.error(e.message);
         }
     }
@@ -49,19 +75,19 @@ const SignUpPage: React.FC = () => {
                 <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Let’s Get Started! Join CryptoCrest Now</h2>
                 <div className="form-grp">
                     <HiOutlineUser className="signup-icon" />
-                    <input type="text" name="username" id="username" placeholder="Unique username" />
+                    <input type="text" name="username" id="username" placeholder="Unique username" required />
                 </div>
                 <div className="form-grp">
                     <HiOutlineMail className="signup-icon" />
-                    <input type="email" name="email" id="email" placeholder="Email address" />
+                    <input type="email" name="email" id="email" placeholder="Email address" required />
                 </div>
                 <div className="form-grp">
                     <HiOutlineLockClosed className="signup-icon" />
-                    <input type="password" name="password" id="password" placeholder="Strong password" />
+                    <input type="password" name="password" id="password" placeholder="Strong password" required />
                 </div>
                 <button className="signup-btn" type="submit">SignUp</button>
                 <div className="alternative">Or Signup with</div>
-                <button className="signup-google">
+                <button className="signup-google" type="button" onClick={handleGoogleSignUp}>
                     <FcGoogle size={25} className="google-icon" />
                     <h2>oogle</h2>
                 </button>
