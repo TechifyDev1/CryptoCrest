@@ -8,8 +8,12 @@
     align-items: center;
     padding: 1rem 2rem;
     transition: all 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: -1;
     background-color: var(--bg);
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 
     .menu-icon {
 

@@ -6,12 +6,14 @@
     align-items: center;
     flex-direction: column;
     width: 80%;
-    height: 90% !important;
+    height: 85% !important;
     background-color: var(--shade);
     padding: 1rem 2rem;
     gap: 2rem;
     overflow-y: auto;
     transition: all 0.3s ease-in-out;
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary-color) var(--shade);
 
     @media (max-width: 768px) {
         width: 100% !important;
