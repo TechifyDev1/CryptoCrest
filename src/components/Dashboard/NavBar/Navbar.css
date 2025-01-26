@@ -8,6 +8,8 @@
     align-items: center;
     padding: 1rem 2rem;
     transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    background-color: var(--bg);
 
     .menu-icon {
 

@@ -6,6 +6,7 @@ import MobileTransactions from './MobileTransactions_section/MobileTransactionsS
 import SummarySection from './Summery_section/SummerySection';
 import TransactionSection from './Transactions_section/TransactionsSection';
 import TransactionDetails from './TransactionsDetails_slide/TransactionDetails';
+import MobileTopNav from '../../Helpers/Mobile_topnav/MobileTopNav';
 const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) => {
     interface Transaction {
         id: string;
@@ -67,6 +68,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
 
     return (
         <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
+            <MobileTopNav currentpage="Transactions" />
             <SummarySection totalTransactions={250} totalFees="$45" balanceChange="+$1,200" />
             <FilterSearchSection />
             <TransactionSection openDetails={setOpenDetails} setChosenTrans={setChosenTrans} transactions={transactions} />

@@ -1,11 +1,13 @@
 .overview-section {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     width: 100%;
     height: auto;
-    justify-content: space-between;
+    justify-content: space-between !important;
+
 
     @media (max-width: 768px) {
-        flex-direction: column-reverse;
+        flex-direction: column-reverse !important;
     }
 
     .something {

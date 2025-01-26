@@ -6,7 +6,7 @@
     align-items: center;
     flex-direction: column;
     width: 80%;
-    height: 90%;
+    height: 90% !important;
     background-color: var(--shade);
     padding: 1rem 2rem;
     gap: 2rem;
@@ -16,6 +16,6 @@
     @media (max-width: 768px) {
         width: 100% !important;
         bottom: 15%;
-        height: 73%;
+        height: 73% !important;
     }
 }

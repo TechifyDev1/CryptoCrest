@@ -50,7 +50,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ totalValue, change24h
     };
 
     return (
-        <div className="overview-section">
+        <div className="port-overview-section">
             <div className="overview-cards">
                 <div className="overview-card">
                     <h3>Total Portfolio Value</h3>
