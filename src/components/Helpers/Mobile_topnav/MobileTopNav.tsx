@@ -1,10 +1,11 @@
-import { BiArrowFromLeft } from 'react-icons/bi';
+
+import { FaArrowLeft } from 'react-icons/fa6';
 import './Mobile.css';
 const MobileTopNav: React.FC<{ currentpage: string }> = ({ currentpage }) => {
     return (
         <nav className="mobile-topnav">
             <div className="back-arrow">
-                <BiArrowFromLeft size={25} />
+                <FaArrowLeft style={{color: 'var(--primary-color)'}} />
             </div>
             <div className="current-page">
                 {currentpage}
