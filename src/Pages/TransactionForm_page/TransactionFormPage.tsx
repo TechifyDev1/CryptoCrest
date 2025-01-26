@@ -4,6 +4,7 @@ import MobileTopNav from "../../components/Helpers/Mobile_topnav/MobileTopNav";
 import MobileNav from "../../components/Helpers/Mobile_nav/MobileNav";
 import { useNavigate, useParams } from "react-router-dom";
 import './TransactionForm.css';
+import { toast } from "sonner";
 
 const transactionFormPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -45,13 +46,14 @@ const transactionFormPage: React.FC = () => {
       }
     }, [id]);
   
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     };
   
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+      toast.loading('loading')
       if (formData.type && formData.cryptocurrency && formData.amount > 0 && formData.date) {
         if (id === 'new') {
           // Add transaction logic
@@ -102,7 +104,8 @@ const transactionFormPage: React.FC = () => {
         <textarea
           name="description"
           placeholder="Description"
-          value={formData.description || ''}
+          value={formData.description}
+          onChange={handleChange}
           required
         ></textarea>
       <button type="submit">{id === 'new' ? 'Add Transaction' : 'Save Changes'}</button>
