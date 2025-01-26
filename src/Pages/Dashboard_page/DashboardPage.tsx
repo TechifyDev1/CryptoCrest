@@ -4,6 +4,7 @@ import NavBar from "../../components/Dashboard/NavBar/NavBar";
 import MobileNav from "../../components/Helpers/Mobile_nav/MobileNav";
 import SideBar from "../../components/Helpers/Sidebar/SideBar";
 import MobileTopNav from "../../components/Helpers/Mobile_topnav/MobileTopNav";
+import AddTransBtn from "../../components/Helpers/Add_trans/AddTransBtn";
 
 const DashboardPage: React.FC = () => {
     const [toggleSideBar, setToggleNav] = useState<boolean>(false);
@@ -14,6 +15,7 @@ const DashboardPage: React.FC = () => {
             <SideBar currentpage="dashboard" toggleNav={toggleSideBar} />
             <MainSection toggleSideBar={toggleSideBar} />
             <MobileNav />
+            <AddTransBtn />
         </div>
     );
 }

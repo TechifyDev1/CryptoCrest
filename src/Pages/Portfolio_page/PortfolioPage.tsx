@@ -5,6 +5,7 @@ import SideBar from "../../components/Helpers/Sidebar/SideBar";
 import MainSection from "../../components/Portfolio_page/Main_section/MainSection";
 import './Portfolio.css';
 import MobileTopNav from "../../components/Helpers/Mobile_topnav/MobileTopNav";
+import AddTransBtn from "../../components/Helpers/Add_trans/AddTransBtn";
 
 const PortFolioPage: React.FC = () => {
     const [toggleNav, setToggleNav] = useState<boolean>(false);
@@ -15,6 +16,7 @@ const PortFolioPage: React.FC = () => {
             <NavBar toggleSideBar={toggleNav} togglenav={setToggleNav} />
             <MobileTopNav currentpage="Portfolio" />
             <MainSection toggleSideBar={toggleNav} />
+            <AddTransBtn />
         </div>
     );
 }
