@@ -49,6 +49,12 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({ transaction
                     <span className="label">Description:</span>
                     <span className="value">{transaction?.description}</span>
                 </div>
+            <div className="action-btns" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <button className="edit-btn" onClick={onClose}>
+                    Edit</button>
+                <button className="delete-btn">
+                    Delete Transaction</button>
+            </div>
             </div>
         </div>
     );

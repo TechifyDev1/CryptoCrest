@@ -5,7 +5,7 @@ import './Main.css';
 
 const MainSection: React.FC = () => {
     return (
-        <div className="main-section">
+        <div className="set-main-section">
             <div className="profile-header">
                 <div className="img-edit">
                     <img src="https://randomuser.me/api/portraits/lego/5.jpg" alt="profile" />

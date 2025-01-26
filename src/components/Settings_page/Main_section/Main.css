@@ -1,5 +1,17 @@
-.main-section {
-    height: 100vh !important;
+.set-main-section {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    background-color: var(--shade);
+    padding: 1rem 2rem;
+    gap: 2rem;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
 
     @media (max-width: 768px) {
         width: 100%;
