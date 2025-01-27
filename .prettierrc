@@ -6,5 +6,6 @@
   "printWidth": 80,
   "arrowParens": "always",
   "endOfLine": "auto",
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "proseWrap": "never"
 }

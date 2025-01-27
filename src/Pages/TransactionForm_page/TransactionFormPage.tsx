@@ -35,9 +35,7 @@ const transactionFormPage: React.FC = () => {
 
   useEffect(() => {
     if (id && id !== 'new') {
-      // Fetch transaction details for editing
       const fetchTransaction = async () => {
-        // Example: Fetch from backend or state
         const fetchedTransaction = {
           id,
           type: 'Buy',
