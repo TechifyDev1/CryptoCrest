@@ -7,20 +7,21 @@ import './TransactionForm.css';
 import { toast } from 'sonner';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/firebase-init';
+import { Transaction } from '../../type';
+import AvailableCoins from './Available_coins/AvailableCoin';
 
 const transactionFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const [showAvailableCoins, setShowAvailableCoins] = useState(false);
+  const [typedCoin, setTypedCoin] = useState('');
+
+  const handleCoinSelection = (coin: string) => {
+    setFormData((prev) => ({ ...prev, asset: coin }));
+    setTypedCoin(coin);
+    setShowAvailableCoins(false);
+  };
+
   const navigate = useNavigate();
-  interface Transaction {
-    id: string;
-    type: string;
-    asset: string;
-    amount: number;
-    date: string;
-    fees: number;
-    description: string;
-    status: string;
-  }
 
   const [formData, setFormData] = useState<Transaction>({
     id: '',
@@ -58,7 +59,13 @@ const transactionFormPage: React.FC = () => {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === 'asset') {
+      setTypedCoin(value);
+      setShowAvailableCoins(true);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -96,6 +103,7 @@ const transactionFormPage: React.FC = () => {
       navigate('/transactions');
     }
   };
+
   return (
     <div className="transaction-form-page">
       <SideBar currentpage="new" toggleNav={true} />
@@ -119,10 +127,15 @@ const transactionFormPage: React.FC = () => {
           <input
             type="text"
             name="asset"
-            placeholder="asset (e.g., Bitcoin)"
+            placeholder="Asset (e.g., Bitcoin)"
             value={formData.asset}
             onChange={handleChange}
             required
+          />
+          <AvailableCoins
+            typedCoin={typedCoin}
+            showAvailableCoins={showAvailableCoins}
+            setChosenCoin={handleCoinSelection}
           />
           <input
             type="number"

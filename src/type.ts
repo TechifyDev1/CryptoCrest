@@ -3,8 +3,8 @@ export interface Transaction {
   type: string;
   date: string;
   asset: string;
-  amount: string;
-  fees: string;
+  amount: number;
+  fees: number;
   status: string;
   description: string;
 }
