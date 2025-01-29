@@ -8,22 +8,24 @@
 
   @media (max-width: 768px) {
     margin-top: 0;
+    width: 100%;
   }
 
   .coin {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 50%;
-    padding: 1rem;
     margin: auto;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    width: 50%;
+    padding: 1rem !important;
     height: 50px;
     background-color: var(--shade);
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
 
-    &:hover {
-      transform: scale(1.1);
+    @media (max-width: 768px) {
+      width: 100%;
     }
 
     img {

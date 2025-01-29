@@ -26,7 +26,6 @@ const AvailableCoins: React.FC<AvailableCoinsProps> = ({
         const response = await axios.get(
           `https://api.coingecko.com/api/v3/search?query=${typedCoin}`
         );
-        console.log(response.data.coins);
         setMatchedCoins(response.data.coins);
       } catch (error) {
         console.error('Error fetching coins:', error);

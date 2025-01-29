@@ -8,3 +8,9 @@ export interface Transaction {
   status: string;
   description: string;
 }
+
+export interface CurrencyProps {
+  coin: string;
+  balance: number;
+  price: number;
+}

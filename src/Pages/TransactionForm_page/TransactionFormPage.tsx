@@ -5,7 +5,7 @@ import MobileNav from '../../components/Helpers/Mobile_nav/MobileNav';
 import { useNavigate, useParams } from 'react-router-dom';
 import './TransactionForm.css';
 import { toast } from 'sonner';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { arrayUnion, doc, runTransaction, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/firebase-init';
 import { Transaction } from '../../type';
 import AvailableCoins from './Available_coins/AvailableCoin';
@@ -70,7 +70,8 @@ const transactionFormPage: React.FC = () => {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.loading('loading');
+    toast.loading('Loading...');
+
     if (
       formData.type &&
       formData.asset &&
@@ -80,27 +81,64 @@ const transactionFormPage: React.FC = () => {
       if (id === 'new') {
         const newTransaction = { ...formData, id: Date.now().toString() };
         const username = auth.currentUser?.displayName?.toLowerCase();
-        console.log('Adding transaction:', username, newTransaction);
-        if (!username) return;
+
+        if (!username) {
+          toast.error('User not authenticated');
+          return;
+        }
+
         const userRef = doc(db, 'users', username);
-        const existingTransactions = (await getDoc(userRef)).data()
-          ?.transactions;
+        const currencyRef = doc(db, 'currencies', username);
+
         try {
-          await setDoc(
-            userRef,
-            {
-              transactions: [...(existingTransactions || []), newTransaction],
-            },
-            { merge: true }
-          );
+          await updateDoc(userRef, {
+            transactions: arrayUnion(newTransaction),
+          });
+
+          await runTransaction(db, async (transaction) => {
+            const currencySnapshot = await transaction.get(currencyRef);
+            const currencyDoc = currencySnapshot.data();
+            if (currencyDoc && formData.asset.toLowerCase() in currencyDoc) {
+              const currency = currencyDoc[formData.asset.toLowerCase()];
+              const updatedBalance =
+                formData.type === 'Buy'
+                  ? Number(currency.balance) + Number(formData.amount)
+                  : Number(currency.balance) - Number(formData.amount);
+
+              transaction.set(
+                currencyRef,
+                {
+                  [formData.asset.toLowerCase()]: {
+                    balance: Number(updatedBalance),
+                    price: Number(currency.price),
+                    name: currency.name,
+                  },
+                },
+                { merge: true }
+              );
+            } else {
+              transaction.set(
+                currencyRef,
+                {
+                  [formData.asset.toLowerCase()]: {
+                    balance: Number(formData.amount),
+                    price: Number(0),
+                    name: formData.asset,
+                  },
+                },
+                { merge: true }
+              );
+            }
+          });
+
           toast.success('Transaction added successfully');
+          navigate('/transactions');
         } catch (e: any) {
-          toast.error(e.message);
+          toast.error(e.message || 'An unexpected error occurred');
         }
       } else {
         console.log('Updating transaction:', formData);
       }
-      navigate('/transactions');
     }
   };
 
