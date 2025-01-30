@@ -1,55 +1,55 @@
 .overview-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    align-items: center;
-    background-color: var(--bg);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  padding: 1rem 2rem;
+  align-items: center;
+  background-color: var(--bg);
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  .charts-container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
 
     @media (max-width: 768px) {
-        flex-direction: column;
+      flex-direction: column;
+      width: 100%;
     }
 
-    .charts-container {
+    .chart {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 0;
+
+      @media (max-width: 768px) {
+        border-right: none;
+        border-bottom: 1px solid var(--shade);
+        padding: 0.5rem;
+        width: 100%;
+      }
+
+      div {
         display: flex;
-        gap: 1rem;
+        justify-content: center;
+        align-items: center;
 
         @media (max-width: 768px) {
-            flex-direction: column;
-            width: 100%;
+          flex-direction: column;
+          width: 100% !important;
         }
-
-        .chart {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 0;
-            border-right: 1px solid var(--shade);
-
-            @media (max-width: 768px) {
-                border-right: none;
-                border-bottom: 1px solid var(--shade);
-                padding: 0.5rem;
-                width: 100%;
-            }
-
-            div {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                @media (max-width: 768px) {
-                    flex-direction: column;
-                    width: 100% !important;
-                }
-            }
-        }
+      }
     }
+  }
 
-    .header {
-        @media (max-width: 768px) {
-            width: 100%;
-        }
+  .header {
+    @media (max-width: 768px) {
+      width: 100%;
     }
+  }
 }
