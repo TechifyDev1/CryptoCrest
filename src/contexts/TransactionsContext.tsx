@@ -16,11 +16,9 @@ const TransactionsContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [transactions, setTransactions] = useState<any[]>([]);
   useEffect(() => {
-    let unsubscribeTransactions: () => void = () => {};
-
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && user.displayName) {
-        unsubscribeTransactions = onSnapshot(
+        const unsubscribeTransactions = onSnapshot(
           doc(db, 'users', user.displayName.toLowerCase()),
           (doc) => {
             const data = doc.data();
@@ -29,6 +27,7 @@ const TransactionsContextProvider: React.FC<{ children: React.ReactNode }> = ({
             }
           }
         );
+        return unsubscribeTransactions;
       }
     });
 

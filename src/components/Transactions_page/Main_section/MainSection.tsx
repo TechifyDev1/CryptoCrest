@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AnalyticsSection from './Analytics_section/AnalyticsSection';
 import FilterSearchSection from './FilterSearch_section/FilterSearchSection';
 import './Main.css';
@@ -18,6 +18,15 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     : [];
   const [openDetails, setOpenDetails] = useState<boolean>(false);
   const [chosenTrans, setChosenTrans] = useState<Transaction>();
+  const [fees, setFees] = useState<number>(0);
+  useEffect(() => {
+    setFees(
+      transactions.reduce(
+        (total, tr) => total + parseFloat(`${tr.fees || 0}`),
+        0
+      )
+    );
+  }, [transactions]);
 
   const transactionTrendsData = [
     { date: '2025-01-01', amount: 500 },
@@ -36,8 +45,8 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
       <MobileTopNav currentpage="Transactions" />
       <SummarySection
-        totalTransactions={250}
-        totalFees="$45"
+        totalTransactions={transactions.length}
+        totalFees={`$${fees}`}
         balanceChange="+$1,200"
       />
       <FilterSearchSection />
