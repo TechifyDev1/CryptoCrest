@@ -9,24 +9,44 @@ import TransactionDetails from './TransactionsDetails_slide/TransactionDetails';
 import MobileTopNav from '../../Helpers/Mobile_topnav/MobileTopNav';
 import { transactionContext } from '../../../contexts/TransactionsContext';
 import { Transaction } from '../../../type';
+
 const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
   toggleSideBar,
 }) => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    Transaction[]
+  >([]);
   const transactionContextValue = useContext(transactionContext);
-  const transactions = transactionContextValue
-    ? transactionContextValue.transactions
-    : [];
   const [openDetails, setOpenDetails] = useState<boolean>(false);
   const [chosenTrans, setChosenTrans] = useState<Transaction>();
   const [fees, setFees] = useState<number>(0);
+  const [totalBalance, setTotalBalance] = useState<number>(0);
+
   useEffect(() => {
-    setFees(
-      transactions.reduce(
-        (total, tr) => total + parseFloat(`${tr.fees || 0}`),
-        0
-      )
-    );
-  }, [transactions]);
+    if (transactionContextValue) {
+      setTransactions(transactionContextValue.transactions);
+      setFilteredTransactions(transactionContextValue.transactions);
+    }
+  }, [transactionContextValue]);
+
+  useEffect(() => {
+    if (filteredTransactions.length > 0) {
+      setFees(
+        filteredTransactions.reduce(
+          (total, tr) => total + parseFloat(`${tr.fees || 0}`),
+          0
+        )
+      );
+
+      setTotalBalance(
+        filteredTransactions.reduce(
+          (acc, tr) => acc + parseFloat(`${tr.amount || 0}`),
+          0
+        )
+      );
+    }
+  }, [filteredTransactions]);
 
   const transactionTrendsData = [
     { date: '2025-01-01', amount: 500 },
@@ -45,25 +65,26 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
       <MobileTopNav currentpage="Transactions" />
       <SummarySection
-        totalTransactions={transactions.length}
+        totalTransactions={filteredTransactions.length}
         totalFees={`$${fees}`}
-        balanceChange="+$1,200"
+        balanceChange={`$${totalBalance}`}
       />
-      <FilterSearchSection />
+      <FilterSearchSection
+        transactions={transactions}
+        setFilteredTransactions={setFilteredTransactions}
+      />
       <TransactionSection
         openDetails={setOpenDetails}
         setChosenTrans={setChosenTrans}
-        transactions={transactions}
+        transactions={filteredTransactions} // Show only filtered transactions
       />
       <TransactionDetails
         openDetails={openDetails}
-        onClose={() => {
-          setOpenDetails((prev) => !prev);
-        }}
+        onClose={() => setOpenDetails((prev) => !prev)}
         transaction={chosenTrans}
       />
       <MobileTransactions
-        transactions={transactions}
+        transactions={filteredTransactions} // Show only filtered transactions
         openDetails={setOpenDetails}
         setChosenTrans={setChosenTrans}
       />
