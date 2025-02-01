@@ -9,6 +9,7 @@ import TransactionDetails from './TransactionsDetails_slide/TransactionDetails';
 import MobileTopNav from '../../Helpers/Mobile_topnav/MobileTopNav';
 import { transactionContext } from '../../../contexts/TransactionsContext';
 import { Transaction } from '../../../type';
+import { CryptoContext } from '../../../contexts/CryptoContext';
 
 const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
   toggleSideBar,
@@ -18,10 +19,14 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     Transaction[]
   >([]);
   const transactionContextValue = useContext(transactionContext);
+  const currenciesContextValue = useContext(CryptoContext);
   const [openDetails, setOpenDetails] = useState<boolean>(false);
   const [chosenTrans, setChosenTrans] = useState<Transaction>();
   const [fees, setFees] = useState<number>(0);
   const [totalBalance, setTotalBalance] = useState<number>(0);
+  const [assetDistributionData, setAssetDisptributionData] = useState<
+    { asset: string; value: number }[]
+  >([]);
 
   useEffect(() => {
     if (transactionContextValue) {
@@ -30,6 +35,11 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     }
   }, [transactionContextValue]);
 
+  useEffect(() => {
+    setAssetDisptributionData(currenciesContextValue.crypto);
+  }, [currenciesContextValue]);
+
+  console.log(assetDistributionData);
   useEffect(() => {
     if (filteredTransactions.length > 0) {
       setFees(
@@ -54,13 +64,6 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     { date: '2025-01-03', amount: 300 },
   ];
 
-  const assetDistributionData = [
-    { asset: 'Bitcoin', value: 40 },
-    { asset: 'Ethereum', value: 30 },
-    { asset: 'Ripple', value: 20 },
-    { asset: 'Others', value: 10 },
-  ];
-
   return (
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
       <MobileTopNav currentpage="Transactions" />
@@ -76,7 +79,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
       <TransactionSection
         openDetails={setOpenDetails}
         setChosenTrans={setChosenTrans}
-        transactions={filteredTransactions} // Show only filtered transactions
+        transactions={filteredTransactions}
       />
       <TransactionDetails
         openDetails={openDetails}
@@ -84,7 +87,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
         transaction={chosenTrans}
       />
       <MobileTransactions
-        transactions={filteredTransactions} // Show only filtered transactions
+        transactions={filteredTransactions}
         openDetails={setOpenDetails}
         setChosenTrans={setChosenTrans}
       />
