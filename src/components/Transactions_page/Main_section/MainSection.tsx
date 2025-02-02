@@ -27,11 +27,19 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
   const [assetDistributionData, setAssetDisptributionData] = useState<
     { asset: string; value: number }[]
   >([]);
+  const [transactionTrendsData, setTransactionsTrendsData] = useState<any[]>(
+    []
+  );
 
   useEffect(() => {
     if (transactionContextValue) {
       setTransactions(transactionContextValue.transactions);
       setFilteredTransactions(transactionContextValue.transactions);
+      setTransactionsTrendsData(
+        transactionContextValue.transactions.map(
+          ({ asset, description, fees, id, status, type, ...rest }) => rest
+        )
+      );
     }
   }, [transactionContextValue]);
 
@@ -57,12 +65,6 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
       );
     }
   }, [filteredTransactions]);
-
-  const transactionTrendsData = [
-    { date: '2025-01-01', amount: 500 },
-    { date: '2025-01-02', amount: 800 },
-    { date: '2025-01-03', amount: 300 },
-  ];
 
   return (
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
