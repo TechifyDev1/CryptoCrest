@@ -47,8 +47,6 @@ const OverviewContainer: React.FC = () => {
           })
         );
 
-        console.log((await marketPrice).data);
-
         setPurchaseAmount(purchases.map((t: any) => t.amount));
         setRevenueAmounts(revenue.map((t: any) => t.amount));
 
