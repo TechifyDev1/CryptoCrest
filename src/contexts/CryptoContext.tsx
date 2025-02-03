@@ -18,11 +18,11 @@ const CryptoContextProvider: React.FC<{ children: ReactNode }> = ({
         const unsubscribeCurrency = onSnapshot(
           doc(db, 'currencies', user.displayName.toLowerCase()),
           (doc) => {
-            const data = doc.data(); // Get the document data
+            const data = doc.data();
             if (data) {
               const coinsArray = Object.keys(data).map((key) => ({
-                id: key, // The cryptocurrency key (e.g., "bitcoin", "fasttoken")
-                ...data[key], // Spread its details (balance, name, price)
+                id: key,
+                ...data[key],
               }));
 
               setCoins(coinsArray);
