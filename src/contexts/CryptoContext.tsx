@@ -20,10 +20,11 @@ const CryptoContextProvider: React.FC<{ children: ReactNode }> = ({
           (doc) => {
             const data = doc.data();
             if (data) {
-              const coinsArray = Object.keys(data).map((key) => ({
+                // Convert the data object into an array of coin objects
+                const coinsArray = Object.keys(data).map((key) => ({
                 id: key,
                 ...data[key],
-              }));
+                }));
 
               setCoins(coinsArray);
             }
