@@ -9,6 +9,7 @@ import { arrayUnion, doc, runTransaction, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/firebase-init';
 import { Transaction } from '../../type';
 import AvailableCoins from './Available_coins/AvailableCoin';
+import { fetchCryptoPrice } from './fetchCryptoPrice';
 
 const transactionFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,6 +33,7 @@ const transactionFormPage: React.FC = () => {
     description: '',
     fees: 0,
     status: '',
+    value: 0,
   });
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const transactionFormPage: React.FC = () => {
           description: 'Description',
           fees: 0.5,
           status: 'Completed',
+          value: 0,
         };
         setFormData(fetchedTransaction);
       };
@@ -79,11 +82,13 @@ const transactionFormPage: React.FC = () => {
       formData.date
     ) {
       if (id === 'new') {
-        const newTransaction = { ...formData, id: Date.now().toString() };
+        const price = await fetchCryptoPrice(formData.asset);
+        if(price == 0) throw new Error("Please try again");
+        const newTransaction = { ...formData, id: Date.now().toString(), value: price*formData.amount };
         const username = auth.currentUser?.displayName?.toLowerCase();
 
         if (!username) {
-          toast.error('User not authenticated');
+          toast.error('You\'re not authenticated');
           return;
         }
 

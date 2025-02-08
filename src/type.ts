@@ -7,6 +7,7 @@ export interface Transaction {
   fees: number;
   status: string;
   description: string;
+  value: number;
 }
 
 export interface CurrencyProps {

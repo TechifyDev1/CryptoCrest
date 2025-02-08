@@ -1,9 +1,8 @@
 import React from 'react';
 import './Recent.css';
 
-
 interface RecentTransactionsProps {
-    transactions: { date: string; asset: string; type: string; quantity: number; value: number; }[];
+    transactions: { date: string; asset: string; type: string; amount: number; value: number; }[];
 }
 
 const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
@@ -27,9 +26,9 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions })
                                 <tr key={index} className={`transaction-${transaction.type.toLowerCase()}`}>
                                     <td>{transaction.date}</td>
                                     <td>{transaction.asset}</td>
-                                    <td className={`type ${transaction.type.toLowerCase()}`}>{transaction.type}</td>
-                                    <td>{transaction.quantity.toFixed(2)}</td>
-                                    <td>${transaction.value.toFixed(2)}</td>
+                                    <td className={`type ${transaction?.type.toLowerCase()}`}>{transaction?.type}</td>
+                                    <td>{Number(transaction?.amount).toFixed(2)}</td>
+                                    <td>${Number(transaction.value).toFixed(2)}</td>
                                 </tr>
                             ))}
                         </tbody>
