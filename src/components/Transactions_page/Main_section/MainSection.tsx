@@ -36,9 +36,11 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
       setTransactions(transactionContextValue.transactions);
       setFilteredTransactions(transactionContextValue.transactions);
       setTransactionsTrendsData(
-        transactionContextValue.transactions.map(
-          ({ asset, description, fees, id, status, type, ...rest }) => rest
-        )
+        transactionContextValue.transactions
+          ? transactionContextValue.transactions.map(
+              ({ asset, description, fees, id, status, type, ...rest }) => rest
+            )
+          : []
       );
     }
   }, [transactionContextValue]);
@@ -49,7 +51,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
 
   console.log(assetDistributionData);
   useEffect(() => {
-    if (filteredTransactions.length > 0) {
+    if (filteredTransactions && filteredTransactions.length > 0) {
       setFees(
         filteredTransactions.reduce(
           (total, tr) => total + parseFloat(`${tr.fees || 0}`),
@@ -70,7 +72,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
       <MobileTopNav currentpage="Transactions" />
       <SummarySection
-        totalTransactions={filteredTransactions.length}
+        totalTransactions={filteredTransactions ? filteredTransactions.length : [].length}
         totalFees={`$${fees}`}
         balanceChange={`$${totalBalance}`}
       />

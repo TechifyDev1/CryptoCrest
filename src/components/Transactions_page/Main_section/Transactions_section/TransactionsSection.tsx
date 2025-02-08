@@ -27,7 +27,7 @@ const TransactionSection: React.FC<TransactionListProps> = ({
           </tr>
         </thead>
         <tbody>
-          {transactions.length > 0 ? (
+          {transactions && transactions.length > 0 ? (
             transactions.map((transaction) => (
               <tr
                 key={transaction.id}
