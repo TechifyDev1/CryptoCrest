@@ -10,7 +10,6 @@ export const fetchCryptoPrice = async (coin: string): Promise<number> => {
         });
 
         const price = (await response).data[coin.toLowerCase()]?.usd;
-        console.log(price)
         return price || 0;
     } catch(e: any) {
         console.log(e);

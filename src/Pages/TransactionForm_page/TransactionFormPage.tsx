@@ -57,7 +57,7 @@ const transactionFormPage: React.FC = () => {
   }, [id]);
 
   const handleChange = (
-    e: React.ChangeEvent<
+    e: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {

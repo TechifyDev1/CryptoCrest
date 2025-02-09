@@ -22,7 +22,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions })
                             </tr>
                         </thead>
                         <tbody>
-                            {transactions.map((transaction, index) => (
+                            {transactions.map((transaction: any, index: any) => (
                                 <tr key={index} className={`transaction-${transaction.type.toLowerCase()}`}>
                                     <td>{transaction.date}</td>
                                     <td>{transaction.asset}</td>

@@ -7,9 +7,7 @@ interface TransactionContextType {
   transactions: Transaction[];
 }
 
-const transactionContext = createContext<TransactionContextType | undefined>(
-  undefined
-);
+const transactionContext = createContext<TransactionContextType>({ transactions: [] });
 
 const TransactionsContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
