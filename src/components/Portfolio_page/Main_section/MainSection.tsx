@@ -5,10 +5,13 @@ import PerformanceGraph from './Performance_graph_section/PerformanceGraph';
 import PortfolioBreakdown from './Portfolio_breakdown_section/PortfolioBreakdownSection';
 import RecentTransactions from './Recent_trans_section/RecentTransactions';
 import { transactionContext } from '../../../contexts/TransactionsContext';
+import { CryptoContext } from '../../../contexts/CryptoContext';
 
 const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) => {
     const transactionsContext = useContext(transactionContext);
     const transactions = transactionsContext?.transactions || [];
+    const cryptosConstext = useContext(CryptoContext);
+    const totalValue = cryptosConstext.crypto.reduce((acc, curr) => {return Number(acc) + Number(curr.balance)}, 0);
 
     const portfolioBreakdownData = [
         { name: 'Bitcoin', value: 5000 },
@@ -34,7 +37,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     return (
         <div className="main-section" style={{ width: toggleSideBar ? '80%' : '90%' }}>
             <OverviewSection 
-                totalValue="$10,000" 
+                totalValue={`$${totalValue.toLocaleString()}`}
                 change24h="3.5%" 
                 numberOfAssets={4} 
                 bestPerformer="Ethereum" 
@@ -43,7 +46,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
             />
             <PortfolioBreakdown breakdownData={portfolioBreakdownData2} />
             <PerformanceGraph data={performanceData} />
-            <RecentTransactions transactions={transactions.slice(0, 2)} />
+            <RecentTransactions transactions={transactions.slice(0, 3)} />
         </div>
     );
 };

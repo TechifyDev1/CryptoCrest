@@ -83,6 +83,7 @@ const transactionFormPage: React.FC = () => {
     ) {
       if (id === 'new') {
         const price = await fetchCryptoPrice(formData.asset);
+        console.log(price);
         if(price == 0) throw new Error("Please try again");
         const newTransaction = { ...formData, id: Date.now().toString(), value: price*formData.amount };
         const username = auth.currentUser?.displayName?.toLowerCase();
@@ -115,7 +116,7 @@ const transactionFormPage: React.FC = () => {
                 {
                   [formData.asset.toLowerCase()]: {
                     balance: Number(updatedBalance),
-                    price: Number(currency.price),
+                    price: Number(fetchCryptoPrice(currency)),
                     name: currency.name,
                   },
                 },
@@ -127,7 +128,7 @@ const transactionFormPage: React.FC = () => {
                 {
                   [formData.asset.toLowerCase()]: {
                     balance: Number(formData.amount),
-                    price: Number(0),
+                    price: Number(fetchCryptoPrice(formData.asset)),
                     name: formData.asset,
                   },
                 },
