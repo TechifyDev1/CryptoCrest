@@ -11,7 +11,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const transactionsContext = useContext(transactionContext);
     const transactions = transactionsContext?.transactions || [];
     const cryptosConstext = useContext(CryptoContext);
-    const totalValue = cryptosConstext.crypto.reduce((acc, curr) => {return Number(acc) + Number(curr.balance)}, 0);
+    const totalValue = cryptosConstext.crypto.reduce((acc, curr) => {return Number(acc) + Number(curr.balance * curr.price)}, 0);
 
     const portfolioBreakdownData = [
         { name: 'Bitcoin', value: 5000 },

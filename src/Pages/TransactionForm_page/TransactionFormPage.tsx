@@ -82,6 +82,10 @@ const transactionFormPage: React.FC = () => {
       formData.date
     ) {
       if (id === 'new') {
+        if (!formData.asset || typeof formData.asset !== "string") {
+          toast.error("Invalid asset selected");
+          return;
+        }        
         const price = await fetchCryptoPrice(formData.asset);
         console.log(price);
         if(price == 0) throw new Error("Please try again");
@@ -116,7 +120,7 @@ const transactionFormPage: React.FC = () => {
                 {
                   [formData.asset.toLowerCase()]: {
                     balance: Number(updatedBalance),
-                    price: Number(fetchCryptoPrice(currency)),
+                    price: Number(price),
                     name: currency.name,
                   },
                 },
@@ -128,7 +132,7 @@ const transactionFormPage: React.FC = () => {
                 {
                   [formData.asset.toLowerCase()]: {
                     balance: Number(formData.amount),
-                    price: Number(fetchCryptoPrice(formData.asset)),
+                    price: Number(price),
                     name: formData.asset,
                   },
                 },
