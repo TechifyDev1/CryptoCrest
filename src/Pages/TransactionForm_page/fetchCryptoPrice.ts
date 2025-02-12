@@ -11,7 +11,7 @@ export const fetchCryptoPrice = async (asset: string) => {
     
     if (!exactCoin) {
       console.error("Coin not found:", asset);
-      return 0; // Return 0 if the coin is not found
+      return {};
     }
 
     const coinId = exactCoin.id;
@@ -21,9 +21,9 @@ export const fetchCryptoPrice = async (asset: string) => {
     const price = coinWithPrice.data.market_data.current_price.usd;
 
     console.log(price);
-    return price || 0;
+    return {price, coinId};
   } catch (error) {
     console.error("Error fetching price:", error);
-    return 0;
+    return {};
   }
 };

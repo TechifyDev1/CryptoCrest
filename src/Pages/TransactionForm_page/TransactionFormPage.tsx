@@ -86,7 +86,7 @@ const transactionFormPage: React.FC = () => {
           toast.error("Invalid asset selected");
           return;
         }        
-        const price = await fetchCryptoPrice(formData.asset);
+        const {price, coinId} = await fetchCryptoPrice(formData.asset);
         console.log(price);
         if(price == 0) throw new Error("Please try again");
         const newTransaction = { ...formData, id: Date.now().toString(), value: price*formData.amount };
@@ -122,6 +122,7 @@ const transactionFormPage: React.FC = () => {
                     balance: Number(updatedBalance),
                     price: Number(price),
                     name: currency.name,
+                    coinId,
                   },
                 },
                 { merge: true }
@@ -134,6 +135,7 @@ const transactionFormPage: React.FC = () => {
                     balance: Number(formData.amount),
                     price: Number(price),
                     name: formData.asset,
+                    coinId
                   },
                 },
                 { merge: true }
