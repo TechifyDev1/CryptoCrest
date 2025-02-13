@@ -88,7 +88,7 @@ const transactionFormPage: React.FC = () => {
         }        
         const {price, coinId} = await fetchCryptoPrice(formData.asset);
         console.log(price);
-        if(price == 0) throw new Error("Please try again");
+        if(!price && !coinId) throw new Error("Please try again");
         const newTransaction = { ...formData, id: Date.now().toString(), value: price*formData.amount };
         const username = auth.currentUser?.displayName?.toLowerCase();
 

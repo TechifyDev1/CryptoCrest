@@ -12,56 +12,31 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const transactionsContext = useContext(transactionContext);
     const transactions = transactionsContext?.transactions || [];
     const cryptosContext = useContext(CryptoContext);
-    
-    // Calculate total portfolio value
-    const totalValue = cryptosContext.crypto.reduce((acc, curr) => {
-        return Number(acc) + Number(curr.balance * curr.price);
-    }, 0);
-    
+    const totalValue = cryptosContext.crypto.reduce((acc, curr) => {return Number(acc) + Number(curr.balance * curr.price)}, 0);
     const [hoursChange, setHoursChange] = useState<number>(0);
     const coinSet = new Set();
-    
     useEffect(() => {
         const fetchHourlyChange = async () => {
-            const balances = {}; // Store balances
-            let totalChange = 0;
-    
-            // Collect unique coin IDs & store balances
+            
             cryptosContext.crypto.forEach(crypto => {
                 coinSet.add(crypto.coinId);
-                balances[crypto.coinId] = crypto.balance;
             });
     
             for (const coin of coinSet) {
                 try {
-                    const res = await axios.get(
-                        `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd&include_24hr_change=true`
-                    );
-    
-                    // Access 24H change
-                    const priceChange = res.data[coin]?.usd_24h_change || 0;
-                    const balance = balances[coin] || 0;
-    
-                    // Weighted change (percentage change * balance)
-                    const weightedChange = (priceChange / 100) * balance;
-    
-                    totalChange += weightedChange;
-    
+                    const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd&include_24hr_change=true`);
+                    
+                    // access 24H change
+                    console.log(`${coin} 24H Change:`, res.data[coin as any]?.usd_24h_change); 
+                    
                 } catch (error) {
                     console.error(`Error fetching data for ${coin}:`, error);
                 }
             }
-    
-            // Calculate percentage change relative to total portfolio value
-            const totalChangePercentage = totalValue > 0 ? (totalChange / totalValue) * 100 : 0;
-    
-            setHoursChange(totalChangePercentage);
-            console.log("Total 24H Portfolio Change:", totalChangePercentage.toFixed(2) + "%");
         };
     
         fetchHourlyChange();
-    }, [cryptosContext, totalValue]);
-    
+    }, [cryptosContext]);
 
     const portfolioBreakdownData = [
         { name: 'Bitcoin', value: 5000 },
