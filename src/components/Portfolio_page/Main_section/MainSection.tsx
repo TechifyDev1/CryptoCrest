@@ -14,6 +14,8 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const cryptosContext = useContext(CryptoContext);
     const totalValue = cryptosContext.crypto.reduce((acc, curr) => {return Number(acc) + Number(curr.balance * curr.price)}, 0);
     const [hoursChange, setHoursChange] = useState<number>(0);
+    const [bestAsset, setBestAsset] = useState<string>('');
+    const [worstAsset, setWorstAsset] = useState<string>('');
     const coinSet = new Set();
     useEffect(() => {
         const fetchHourlyChange = async () => {
@@ -21,18 +23,31 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
             cryptosContext.crypto.forEach(crypto => {
                 coinSet.add(crypto.coinId);
             });
-    
-            for (const coin of coinSet) {
-                try {
-                    const res = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd&include_24hr_change=true`);
+            const res = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${[...coinSet].join(",")}&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
+            const totalMarketCap = res.data.reduce((acc: number, curr: any) => { return acc + curr.market_cap; }, 0);
+            const weighted24hChange = res.data.reduce((acc: number, curr: any) => {
+                return acc + ((curr.market_cap || 0) * (curr.price_change_percentage_24h || 0));
+            }, 0) / totalMarketCap;
+            let bestPerformerNum: number;
+            const bestPerformerCal = res.data.reduce((acc: any, curr: any) => {
+                bestPerformerNum = acc;
+                if(curr.price_change_percentage_24h > bestPerformerNum) setBestAsset(curr.name);
+            }, 0);
+            bestPerformerCal;
+            let worstPerformerNum: number = Infinity;
+
+            const worstPerformerCal = res.data.reduce((acc: any, curr: any) => {
+                if (curr.price_change_percentage_24h < worstPerformerNum) {
+                    worstPerformerNum = curr.price_change_percentage_24h;
+                    setWorstAsset(curr.name); // Update the worst performer
                     
-                    // access 24H change
-                    console.log(`${coin} 24H Change:`, res.data[coin as any]?.usd_24h_change); 
-                    
-                } catch (error) {
-                    console.error(`Error fetching data for ${coin}:`, error);
                 }
-            }
+             return worstPerformerNum;
+            }, worstPerformerNum);
+
+        worstPerformerCal;
+
+            setHoursChange(weighted24hChange);
         };
     
         fetchHourlyChange();
@@ -63,10 +78,10 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
         <div className="main-section" style={{ width: toggleSideBar ? '80%' : '90%' }}>
             <OverviewSection 
                 totalValue={`$${totalValue.toLocaleString()}`}
-                change24h="3.5%" 
-                numberOfAssets={4} 
-                bestPerformer="Ethereum" 
-                worstPerformer="Cardano" 
+                change24h={`${hoursChange.toFixed(1)}`} 
+                numberOfAssets={cryptosContext.crypto.length} 
+                bestPerformer={bestAsset}
+                worstPerformer={worstAsset} 
                 portfolioBreakdown={portfolioBreakdownData} 
             />
             <PortfolioBreakdown breakdownData={portfolioBreakdownData2} />
