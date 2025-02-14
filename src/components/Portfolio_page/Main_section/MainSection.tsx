@@ -19,39 +19,46 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const coinSet = new Set();
     useEffect(() => {
         const fetchHourlyChange = async () => {
-            
             cryptosContext.crypto.forEach(crypto => {
                 coinSet.add(crypto.coinId);
             });
-            const res = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${[...coinSet].join(",")}&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
-            const totalMarketCap = res.data.reduce((acc: number, curr: any) => { return acc + curr.market_cap; }, 0);
-            const weighted24hChange = res.data.reduce((acc: number, curr: any) => {
-                return acc + ((curr.market_cap || 0) * (curr.price_change_percentage_24h || 0));
-            }, 0) / totalMarketCap;
-            let bestPerformerNum: number;
-            const bestPerformerCal = res.data.reduce((acc: any, curr: any) => {
-                bestPerformerNum = acc;
-                if(curr.price_change_percentage_24h > bestPerformerNum) setBestAsset(curr.name);
-            }, 0);
-            bestPerformerCal;
-            let worstPerformerNum: number = Infinity;
-
-            const worstPerformerCal = res.data.reduce((acc: any, curr: any) => {
-                if (curr.price_change_percentage_24h < worstPerformerNum) {
-                    worstPerformerNum = curr.price_change_percentage_24h;
-                    setWorstAsset(curr.name); // Update the worst performer
-                    
+    
+            const res = await axios.get(
+                `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${[...coinSet].join(",")}&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+            );
+    
+            const data = res.data; // Extract data
+    
+            // ✅ Calculate Total Market Cap
+            const totalMarketCap = data.reduce((acc: any, curr: any) => acc + (curr.market_cap || 0), 0);
+    
+            // ✅ Calculate Weighted 24h Change
+            const weighted24hChange =
+                data.reduce((acc: any, curr: any) => acc + ((curr.market_cap || 0) * (curr.price_change_percentage_24h || 0)), 0) /
+                totalMarketCap;
+    
+            // ✅ Find Best and Worst Performer
+            let bestPerformer = data[0];  // Start with the first asset
+            let worstPerformer = data[0]; // Start with the first asset
+    
+            data.forEach((asset: any) => {
+                if (asset.price_change_percentage_24h > bestPerformer.price_change_percentage_24h) {
+                    bestPerformer = asset;
                 }
-             return worstPerformerNum;
-            }, worstPerformerNum);
-
-        worstPerformerCal;
-
+                if (asset.price_change_percentage_24h < worstPerformer.price_change_percentage_24h) {
+                    worstPerformer = asset;
+                }
+            });
+    
+            // ✅ Update State
+            setBestAsset(bestPerformer.name);
+            setWorstAsset(worstPerformer.name);
             setHoursChange(weighted24hChange);
         };
     
         fetchHourlyChange();
     }, [cryptosContext]);
+    
 
     const portfolioBreakdownData = [
         { name: 'Bitcoin', value: 5000 },
