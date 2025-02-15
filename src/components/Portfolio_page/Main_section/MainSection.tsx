@@ -17,6 +17,8 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const [bestAsset, setBestAsset] = useState<string>('');
     const [worstAsset, setWorstAsset] = useState<string>('');
     const [portfolioBreakdownData, setPortfolioBreakdownData] = useState<any[]>([]);
+    const [performanceData, setPerformanceData] = useState<any[]>([]);
+    const [portfolioBreakdownData2, setPortfolioBreakdownData2] = useState<any[]>([]);
     const coinSet = new Set();
     useEffect(() => {
         const fetchHourlyChange = async () => {
@@ -61,22 +63,20 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
         if (cryptosContext.crypto.length > 0) {
             setPortfolioBreakdownData(cryptosContext.crypto.map(({ coinId, balance }) => ({ name: coinId, value: balance })));
         }
+        setPortfolioBreakdownData2(cryptosContext.crypto.map(crypto => {
+            const percentage = (crypto.balance * crypto.price / totalValue) * 100;
+            return {
+                name: crypto.coinId,
+                value: crypto.balance * crypto.price,
+                percentage: Number(percentage.toFixed(2)),
+                currentPrice: `$${crypto.price.toLocaleString()}`
+            };
+        }))
+        setPerformanceData(transactions.map(transaction => ({
+            date: transaction.date,
+            value: transaction.amount
+        })))
     }, [cryptosContext.crypto]);
-    
-
-    const portfolioBreakdownData2 = [
-        { name: 'Bitcoin', value: 5000, percentage: 50, currentPrice: '$25,000' },
-        { name: 'Ethereum', value: 3000, percentage: 30, currentPrice: '$1,500' },
-        { name: 'Cardano', value: 1500, percentage: 15, currentPrice: '$0.50' },
-    ];
-
-    const performanceData = [
-        { date: '2023-12-01', value: 5000 },
-        { date: '2023-12-02', value: 5200 },
-        { date: '2023-12-03', value: 5100 },
-        { date: '2023-12-04', value: 5300 },
-        { date: '2023-12-05', value: 5400 },
-    ];
 
     return (
         <div className="main-section" style={{ width: toggleSideBar ? '80%' : '90%' }}>
