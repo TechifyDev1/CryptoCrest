@@ -19,9 +19,11 @@ export const fetchCryptoPrice = async (asset: string) => {
     // Fetch price details for the coin
     const coinWithPrice = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}`);
     const price = coinWithPrice.data.market_data.current_price.usd;
+    const img = coinWithPrice.data.image.small;
+    const symbol = coinWithPrice.data.symbol;
 
     console.log(price);
-    return {price, coinId};
+    return {price, coinId, img, symbol};
   } catch (error) {
     console.error("Error fetching price:", error);
     return {};
