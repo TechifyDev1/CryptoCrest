@@ -8,7 +8,7 @@ interface OverviewSectionProps {
     numberOfAssets: number;
     bestPerformer: string;
     worstPerformer: string;
-    portfolioBreakdown: { name: string; value: number }[];
+    portfolioBreakdown: { asset: string; balance: number }[];
 }
 
 const OverviewSection: React.FC<OverviewSectionProps> = ({ totalValue, change24h, numberOfAssets, bestPerformer, worstPerformer, portfolioBreakdown }) => {
@@ -77,6 +77,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ totalValue, change24h
             </div>
             <div className="overview-chart">
                 <ReactECharts
+                key={portfolioBreakdown.length}
                     option={pieChartOptions}
                     style={{ height: '300px', width: '100%', color: 'white' }}
                 />

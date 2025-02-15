@@ -16,6 +16,7 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
     const [hoursChange, setHoursChange] = useState<number>(0);
     const [bestAsset, setBestAsset] = useState<string>('');
     const [worstAsset, setWorstAsset] = useState<string>('');
+    const [portfolioBreakdownData, setPortfolioBreakdownData] = useState<any[]>([]);
     const coinSet = new Set();
     useEffect(() => {
         const fetchHourlyChange = async () => {
@@ -57,15 +58,11 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({ toggleSideBar }) =>
         };
     
         fetchHourlyChange();
-    }, [cryptosContext]);
+        if (cryptosContext.crypto.length > 0) {
+            setPortfolioBreakdownData(cryptosContext.crypto.map(({ coinId, balance }) => ({ name: coinId, value: balance })));
+        }
+    }, [cryptosContext.crypto]);
     
-
-    const portfolioBreakdownData = [
-        { name: 'Bitcoin', value: 5000 },
-        { name: 'Ethereum', value: 3000 },
-        { name: 'Cardano', value: 1500 },
-        { name: 'Other', value: 500 },
-    ];
 
     const portfolioBreakdownData2 = [
         { name: 'Bitcoin', value: 5000, percentage: 50, currentPrice: '$25,000' },
