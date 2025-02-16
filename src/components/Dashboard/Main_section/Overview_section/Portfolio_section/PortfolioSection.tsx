@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SiRipple } from "react-icons/si";
 import './Portfolio.css';
 import { transactionContext } from "../../../../../contexts/TransactionsContext";
 import { CryptoContext } from "../../../../../contexts/CryptoContext";
@@ -54,12 +53,12 @@ const PortfolioSection: React.FC = () => {
                 {recentCryptos ? recentCryptos.map((crypto: any, index: number) => (
                 <div className="coin" key={index}>
                     <div style={{ display: 'flex', gap: '0.5rem', padding: '0.5rem', alignItems: 'center' }}>
-                        <SiRipple size={25} style={{ color: 'var(--primary-color)' }} />
+                        <img src={crypto.img} width={25} alt={crypto.name} style={{borderRadius: "50%"}} />
                         {crypto.name}
                     </div>
                     <div className="amt-container">
                         <span><b>{crypto.balance + " " + crypto.symbol}</b></span>
-                        <span>${crypto.price}</span>
+                        <span>${crypto.price * crypto.balance}</span>
                     </div>
                 </div>
                 )) : (
