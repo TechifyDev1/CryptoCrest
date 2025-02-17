@@ -1,9 +1,12 @@
 import ReactECharts from 'echarts-for-react';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './Chart.css';
+import { transactionContext } from '../../../../../contexts/TransactionsContext';
 const Chart: React.FC = () => {
     const chartContainer = useRef<HTMLDivElement>(null);
     const [isContainerReady, setIsContainerReady] = useState<boolean>(false);
+    const transactionsContext = useContext(transactionContext);
+    const [transactions, setTransactions] = useState<any[]>([]);
     useEffect(() => {
         const checkReadiness = (): void => {
             if (chartContainer.current) {
@@ -16,7 +19,8 @@ const Chart: React.FC = () => {
             }
         }
         checkReadiness();
-    }, []);
+        setTransactions(transactionsContext.transactions);
+    }, [transactionContext]);
     const options = {
         title: {
             text: "Crypto Price Trend",
@@ -29,7 +33,7 @@ const Chart: React.FC = () => {
         },
         xAxis: {
             type: "category",
-            data: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            data: transactions.map(transaction => transaction.date),
             show: false,
         },
         yAxis: {
@@ -40,7 +44,7 @@ const Chart: React.FC = () => {
             {
                 name: 'ETH',
                 type: 'line',
-                data: [4001, 2222, 3432, 2345, 2334, 4567],
+                data: transactions.map(transaction => transaction.amount),
                 smooth: true,
             },
         ],
