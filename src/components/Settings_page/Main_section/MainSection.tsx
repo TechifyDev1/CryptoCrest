@@ -2,8 +2,13 @@ import { HiLogout } from "react-icons/hi";
 import { HiCamera, HiEnvelope, HiKey, HiPencil } from "react-icons/hi2";
 import { TbToggleLeft } from "react-icons/tb";
 import './Main.css';
+import { auth } from "../../../Firebase/firebase-init";
+import { useState } from "react";
+import EmailEdit from "../Email_edit/EmailEdit";
 
 const MainSection: React.FC = () => {
+    const username = auth.currentUser?.displayName;
+    const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(true);
     return (
         <div className="set-main-section">
             <div className="profile-header">
@@ -14,14 +19,14 @@ const MainSection: React.FC = () => {
                     </button>
                 </div>
                 <div className="username-edit">
-                    <h1>John Doe</h1>
+                    <h1>{username}</h1>
                     <button className="edit-username">
                         <HiPencil size={20} style={{ color: 'var(--primary-color)' }} />
                     </button>
                 </div>
             </div>
             <div className="main-settings">
-                <div className="setting">
+                <div className="setting" onClick={() => setToggleEmailEdit(prev => !prev)}>
                     <div className="icon-div">
                         <HiEnvelope size={20} style={{ color: 'var(--primary-color)' }} />
                     </div>
@@ -44,6 +49,7 @@ const MainSection: React.FC = () => {
                         <HiLogout size={20} style={{ color: 'var(--primary-color)' }} />
                     </div>
                     <p>Logout</p>
+                    <EmailEdit toggleEmailEdit={toggleEmailEdit}/>
                 </div>
             </div>
         </div>

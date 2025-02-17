@@ -15,7 +15,7 @@ const PortfolioSection: React.FC = () => {
 
     useEffect(() => {
         // Calculate total income from transactions
-        setTotalIncome(transactionsContext.transactions.reduce((acc: any, curr: any) => {
+        setTotalIncome(transactionsContext.transactions?.reduce((acc: any, curr: any) => {
             if((curr.type.toLowerCase()) != "buy") {
                 console.log(curr.value, typeof curr.value);
                 return (acc + Number(curr.value)).toFixed(2);

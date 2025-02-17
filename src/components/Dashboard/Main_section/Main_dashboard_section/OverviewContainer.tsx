@@ -25,10 +25,10 @@ const OverviewContainer: React.FC = () => {
         if (!data) throw new Error('No data found');
 
         const transactions = data.transactions;
-        const purchases = transactions.filter(
+        const purchases = transactions?.filter(
           (t: any) => t.type.toLowerCase() === 'buy'
         );
-        const revenue = transactions.filter(
+        const revenue = transactions?.filter(
           (t: any) => t.type.toLowerCase() === 'sell'
         );
 
@@ -39,7 +39,7 @@ const OverviewContainer: React.FC = () => {
         setMarketPrices(marketPrice.data.prices.map((entry: any) => entry[1]));
 
         setDates(
-          marketPrice.data.prices.map((entry: any) => {
+          marketPrice.data.prices?.map((entry: any) => {
             return new Date(entry[0]).toLocaleDateString('en-GB', {
               day: 'numeric',
               month: 'short',
@@ -47,8 +47,8 @@ const OverviewContainer: React.FC = () => {
           })
         );
 
-        setPurchaseAmount(purchases.map((t: any) => t.amount));
-        setRevenueAmounts(revenue.map((t: any) => t.amount));
+        setPurchaseAmount(purchases?.map((t: any) => t.amount));
+        setRevenueAmounts(revenue?.map((t: any) => t.amount));
 
         toast.success('Data fetched successfully');
         fetchedRef.current = true;
