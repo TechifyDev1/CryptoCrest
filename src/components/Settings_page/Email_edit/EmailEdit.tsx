@@ -6,15 +6,27 @@ import { toast } from "sonner";
 const EmailEdit: React.FC<{toggleEmailEdit: boolean}> = ({toggleEmailEdit}) => {
     const handleChangeEmail = async (e: ChangeEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
+        const loader = toast.loading("Updating....");
+        const formData = new FormData(e.target);
+        const oldEmail = formData.get("oldEmail") as string;
+        const newEmail = formData.get("newEmail") as string;
+        
         try {
-            const user = auth.currentUser;
-            if (user?.email !== e.target.oldEmail) throw new Error("Invalid previous email")
+            const user = auth?.currentUser;
             if (!user) throw new Error("You have no account here");
-            updateEmail(user, e.target.newEmail);
+            if (user?.email !== oldEmail) throw new Error("Invalid previous email");
+        
+            console.log(oldEmail, newEmail);
+            await updateEmail(user, newEmail);
+        
+            toast.dismiss(loader);
             toast.success("Email updated successfully");
-        } catch(e: any) {
+        } catch (e: any) {
+            toast.dismiss(loader); // Dismiss the loading toast even on error
             toast.error(e.message);
+            console.log(e);
         }
+        
     }
     return(
         <div className="email-edit-container" style={{transform: toggleEmailEdit ? "" : "translateY(100%)"}}>
