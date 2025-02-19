@@ -7,6 +7,7 @@ import SettingPage from "./Pages/Setting_page/SettingPage";
 import SignUpPage from "./Pages/Signup_page/SignUpPage";
 import TransactionPage from "./Pages/Transactions_page/TransactionPage";
 import TransactionFormPage from "./Pages/TransactionForm_page/TransactionFormPage";
+import { Toaster } from "sonner";
 
 const App = () => {
   return (
@@ -23,6 +24,19 @@ const App = () => {
         <Route path="/portfolio" element={<PortFolioPage />} />
         <Route path="/transactions/:id?" element={<TransactionFormPage />} />
       </Routes>
+        <Toaster
+            position="top-center"
+            closeButton={true}
+            visibleToasts={2}
+            theme="system"
+            richColors={true}
+            toastOptions={{
+              style: {
+                padding: '.6rem',
+                borderRadius: '2rem',
+              },
+            }}
+          />
     </BrowserRouter>
   )
 }

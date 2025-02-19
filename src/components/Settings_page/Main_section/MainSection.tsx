@@ -3,12 +3,24 @@ import { HiCamera, HiEnvelope, HiKey, HiPencil } from "react-icons/hi2";
 import { TbToggleLeft } from "react-icons/tb";
 import './Main.css';
 import { auth } from "../../../Firebase/firebase-init";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmailEdit from "../Email_edit/EmailEdit";
+import { signOut } from "firebase/auth";
 
 const MainSection: React.FC = () => {
-    const username = auth.currentUser?.displayName;
-    const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(true);
+    const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>("John Doe");
+    const handleLogout = async () => {
+        await signOut(auth);
+    }
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUsername(user.displayName || "John Doe");
+            }
+        });
+        return () => unsubscribe();
+    }, []);
     return (
         <div className="set-main-section">
             <div className="profile-header">
@@ -44,7 +56,7 @@ const MainSection: React.FC = () => {
                     </div>
                     <p>Change theme</p>
                 </div>
-                <div className="setting">
+                <div className="setting" onClick={handleLogout}>
                     <div className="icon-div">
                         <HiLogout size={20} style={{ color: 'var(--primary-color)' }} />
                     </div>
