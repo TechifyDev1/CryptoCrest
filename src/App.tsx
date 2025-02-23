@@ -12,11 +12,13 @@ import UnverifiedEmailPage from './Pages/UnverifiedEmail_page/UnverifiedEmailPag
 import ForgottenPasswordPage from './Pages/ForgottenPassword_page/ForgottenPasswordPage';
 import ChangePasswordPage from './Pages/ChangePassword_page/ChangePasswordPage';
 import ResetPasswordSentPage from './Pages/ResetPasswordSent_page/ResetPasswordSentPage';
+import Loading from './components/Helpers/Loading/Loading';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/loading" element={<Loading />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<LandingPage />} />
