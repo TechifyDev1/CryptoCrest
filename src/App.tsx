@@ -13,26 +13,46 @@ import ForgottenPasswordPage from './Pages/ForgottenPassword_page/ForgottenPassw
 import ChangePasswordPage from './Pages/ChangePassword_page/ChangePasswordPage';
 import ResetPasswordSentPage from './Pages/ResetPasswordSent_page/ResetPasswordSentPage';
 import Loading from './components/Helpers/Loading/Loading';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './Firebase/firebase-init';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  useEffect(() => {
+    const unsub = onAuthStateChanged((auth), (user) => {
+      if (user) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+      setIsLoading(false);
+    });
+    return () => {
+      unsub();
+    }
+  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/loading" element={<Loading />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<LandingPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/transactions" element={<TransactionPage />} />
-        <Route path="/settings" element={<SettingPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/portfolio" element={<PortFolioPage />} />
-        <Route path="/transactions/:id?" element={<TransactionFormPage />} />
-        <Route path="/unverified" element={<UnverifiedEmailPage/>} />
-        <Route path="/forgotten-password" element={<ForgottenPasswordPage />} />
-        <Route path="/change-password" element={<ChangePasswordPage />} />
-        <Route path="/email-sent" element={<ResetPasswordSentPage />} />
+        <Route path="/dashboard" element={isUserLoggedIn? (<DashboardPage />): (<LoginPage />)} />
+        <Route path="/transactions" element={isUserLoggedIn? (<TransactionPage />) : (<LoginPage />)} />
+        <Route path="/settings" element={isUserLoggedIn ? (<SettingPage />) : (<LoginPage/>)} />
+        <Route path="/signup" element={isUserLoggedIn ? (<DashboardPage />) : (<SignUpPage />)} />
+        <Route path="/login" element={isUserLoggedIn ? (<DashboardPage />) : (<LoginPage />)} />
+        <Route path="/portfolio" element={isUserLoggedIn ? (<PortFolioPage />) : (<LoginPage />)} />
+        <Route path="/transactions/:id?" element={isUserLoggedIn ? (<TransactionFormPage />) : (<LoginPage />)} />
+        <Route path="/unverified" element={isUserLoggedIn ? (<UnverifiedEmailPage />) : (<LoginPage />)} />
+        <Route path="/forgotten-password" element={isUserLoggedIn ? (<ForgottenPasswordPage />) : (<LoginPage />)} />
+        <Route path="/change-password" element={isUserLoggedIn ? (<ChangePasswordPage />) : (<LoginPage />)} />
+        <Route path="/email-sent" element={isUserLoggedIn ? (<ResetPasswordSentPage />) : (<LoginPage />)} />
       </Routes>
       <Toaster
         position="top-center"
