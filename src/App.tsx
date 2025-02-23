@@ -8,6 +8,9 @@ import SignUpPage from './Pages/Signup_page/SignUpPage';
 import TransactionPage from './Pages/Transactions_page/TransactionPage';
 import TransactionFormPage from './Pages/TransactionForm_page/TransactionFormPage';
 import { Toaster } from 'sonner';
+import UnverifiedEmailPage from './Pages/UnverifiedEmail_page/UnverifiedEmailPage';
+import ForgottenPasswordPage from './Pages/ForgottenPassword_page/ForgottenPasswordPage';
+import ChangePasswordPage from './Pages/ChangePassword_page/ChangePasswordPage';
 
 const App = () => {
   return (
@@ -23,6 +26,9 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/portfolio" element={<PortFolioPage />} />
         <Route path="/transactions/:id?" element={<TransactionFormPage />} />
+        <Route path="/unverified" element={<UnverifiedEmailPage/>} />
+        <Route path="/forgotten-password" element={<ForgottenPasswordPage />} />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
       </Routes>
       <Toaster
         position="top-center"
