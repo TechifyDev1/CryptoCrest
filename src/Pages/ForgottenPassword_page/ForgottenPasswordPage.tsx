@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import "./forgottenpassword.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../Firebase/firebase-init";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import { toast } from "sonner";
 const ForgottenPasswordPage: React.FC = () => {
     const handleUpdatePassword = async (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const navigate = useNavigate();
         const formData = new FormData(e.target);
         const typedEmail = formData.get("email") as string;
         const email = auth.currentUser?.email;
@@ -17,6 +18,7 @@ const ForgottenPasswordPage: React.FC = () => {
             }
             await sendPasswordResetEmail(auth, email);
             toast.success("Password reset email sent successfully.");
+            navigate("/email-sent");
         } catch (error: any) {
             toast.error(error.message);
             toast.error("Please try again.");
