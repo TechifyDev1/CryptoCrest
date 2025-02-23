@@ -1,8 +1,5 @@
 import {
-  EmailAuthProvider,
   GoogleAuthProvider,
-  linkWithCredential,
-  onAuthStateChanged,
   reauthenticateWithPopup,
   unlink,
   updateEmail,
