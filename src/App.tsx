@@ -11,6 +11,7 @@ import { Toaster } from 'sonner';
 import UnverifiedEmailPage from './Pages/UnverifiedEmail_page/UnverifiedEmailPage';
 import ForgottenPasswordPage from './Pages/ForgottenPassword_page/ForgottenPasswordPage';
 import ChangePasswordPage from './Pages/ChangePassword_page/ChangePasswordPage';
+import ResetPasswordSentPage from './Pages/ResetPasswordSent_page/ResetPasswordSentPage';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/unverified" element={<UnverifiedEmailPage/>} />
         <Route path="/forgotten-password" element={<ForgottenPasswordPage />} />
         <Route path="/change-password" element={<ChangePasswordPage />} />
+        <Route path="/email-sent" element={<ResetPasswordSentPage />} />
       </Routes>
       <Toaster
         position="top-center"
