@@ -1,18 +1,17 @@
 .overview-section {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 100%;
-    height: auto;
-    justify-content: space-between !important;
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  height: auto;
+  justify-content: space-between !important;
 
+  @media (max-width: 768px) {
+    flex-direction: column-reverse !important;
+  }
 
+  .something {
     @media (max-width: 768px) {
-        flex-direction: column-reverse !important;
+      width: 100% !important;
     }
-
-    .something {
-        @media (max-width: 768px) {
-            width: 100% !important;
-        }
-    }
+  }
 }

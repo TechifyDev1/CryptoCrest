@@ -9,12 +9,12 @@ import { ThemeProvider } from './contexts/ThemeContext.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <>
-    <ThemeProvider>
-      <TransactionsContextProvider>
-        <CryptoContextProvider>
-          <App />
-        </CryptoContextProvider>
-      </TransactionsContextProvider>
+      <ThemeProvider>
+        <TransactionsContextProvider>
+          <CryptoContextProvider>
+            <App />
+          </CryptoContextProvider>
+        </TransactionsContextProvider>
       </ThemeProvider>
     </>
   </StrictMode>

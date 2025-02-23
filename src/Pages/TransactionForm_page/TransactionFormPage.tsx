@@ -57,9 +57,7 @@ const transactionFormPage: React.FC = () => {
   }, [id]);
 
   const handleChange = (
-    e: ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 
@@ -82,18 +80,24 @@ const transactionFormPage: React.FC = () => {
       formData.date
     ) {
       if (id === 'new') {
-        if (!formData.asset || typeof formData.asset !== "string") {
-          toast.error("Invalid asset selected");
+        if (!formData.asset || typeof formData.asset !== 'string') {
+          toast.error('Invalid asset selected');
           return;
-        }        
-        const {price, coinId, img, symbol} = await fetchCryptoPrice(formData.asset);
+        }
+        const { price, coinId, img, symbol } = await fetchCryptoPrice(
+          formData.asset
+        );
         console.log(price);
-        if(!price && !coinId) throw new Error("Please try again");
-        const newTransaction = { ...formData, id: Date.now().toString(), value: price*formData.amount };
+        if (!price && !coinId) throw new Error('Please try again');
+        const newTransaction = {
+          ...formData,
+          id: Date.now().toString(),
+          value: price * formData.amount,
+        };
         const username = auth.currentUser?.displayName?.toLowerCase();
 
         if (!username) {
-          toast.error('You\'re not authenticated');
+          toast.error("You're not authenticated");
           return;
         }
 

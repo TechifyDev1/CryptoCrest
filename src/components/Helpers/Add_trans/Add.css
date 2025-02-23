@@ -1,21 +1,21 @@
-.add-new{
-    position: fixed;
-    bottom: 10%;
-    right: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 3rem;
-    width: 3rem;
-    z-index: 1000;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    background-color: var(--secondary-color);
-    transition: all 0.4s ease;
-    cursor: pointer;
+.add-new {
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 3rem;
+  z-index: 1000;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: var(--secondary-color);
+  transition: all 0.4s ease;
+  cursor: pointer;
 
-    &:hover{
-        background-color: var(--secondary-color-hover);
-    }
+  &:hover {
+    background-color: var(--secondary-color-hover);
+  }
 }

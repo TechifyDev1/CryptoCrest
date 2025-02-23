@@ -1,36 +1,33 @@
 .top-nav {
-    display: flex;
-    width: 80%;
-    position: fixed;
-    top: 0;
-    right: 0;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--bg);
+  display: flex;
+  width: 80%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--bg);
 
-    @media (max-width: 768px) {
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  .menu-icon {
+    .bar {
+      @media (max-width: 768px) {
         display: none;
+      }
     }
+  }
 
-    .menu-icon {
-
-        .bar {
-
-            @media (max-width: 768px) {
-                display: none;
-            }
-        }
-    }
-
-
-    .profile-info {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        padding: 0.5rem 1rem;
-        gap: 0.5rem;
-    }
+  .profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+  }
 }

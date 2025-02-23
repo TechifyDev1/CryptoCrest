@@ -1,18 +1,18 @@
 .mobile-nav {
-    z-index: 10000000000 !important;
-    position: fixed;
-    bottom: 3%;
-    width: 90%;
-    max-width: 500px;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 3rem;
-    border-radius: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--secondary-color);
+  z-index: 10000000000 !important;
+  position: fixed;
+  bottom: 3%;
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+  border-radius: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--secondary-color);
 
-    @media (min-width: 768px) {
-        display: none;
-    }
+  @media (min-width: 768px) {
+    display: none;
+  }
 }

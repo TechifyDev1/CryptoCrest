@@ -1,71 +1,71 @@
 .mobile-transactions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  .transaction-card {
+    background-color: var(--bg);
+    border-radius: 8px;
     padding: 1rem;
-    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 
-    @media (min-width: 768px) {
-        display: none;
+    &:hover {
+      transform: translateY(-3px);
     }
 
-    .transaction-card {
-        background-color: var(--bg);
-        border-radius: 8px;
-        padding: 1rem;
-        cursor: pointer;
-        transition: transform 0.2s ease;
+    .transaction-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
 
-        &:hover {
-            transform: translateY(-3px);
+      .transaction-type {
+        font-weight: bold;
+        color: var(--text-color);
+      }
+
+      .transaction-status {
+        font-size: 0.875rem;
+        font-weight: bold;
+        text-transform: capitalize;
+
+        &.completed {
+          color: #28a745;
         }
 
-        .transaction-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-
-            .transaction-type {
-                font-weight: bold;
-                color: var(--text-color);
-            }
-
-            .transaction-status {
-                font-size: 0.875rem;
-                font-weight: bold;
-                text-transform: capitalize;
-
-                &.completed {
-                    color: #28a745;
-                }
-
-                &.pending {
-                    color: #ffc107;
-                }
-
-                &.failed {
-                    color: #dc3545;
-                }
-            }
+        &.pending {
+          color: #ffc107;
         }
 
-        .transaction-details {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-
-            .detail {
-                display: flex;
-                justify-content: space-between;
-
-                .label {
-                    font-weight: bold;
-                }
-
-                .value {
-                    color: var(--text-color);
-                }
-            }
+        &.failed {
+          color: #dc3545;
         }
+      }
     }
+
+    .transaction-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .detail {
+        display: flex;
+        justify-content: space-between;
+
+        .label {
+          font-weight: bold;
+        }
+
+        .value {
+          color: var(--text-color);
+        }
+      }
+    }
+  }
 }

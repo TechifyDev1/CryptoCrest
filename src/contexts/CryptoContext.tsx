@@ -4,7 +4,7 @@ import { auth, db } from '../Firebase/firebase-init';
 import { doc, onSnapshot } from 'firebase/firestore';
 
 const CryptoContext = createContext<{
-  crypto: { asset: string; price: number; balance: number, coinId: string }[];
+  crypto: { asset: string; price: number; balance: number; coinId: string }[];
 }>({
   crypto: [],
 });
@@ -20,11 +20,11 @@ const CryptoContextProvider: React.FC<{ children: ReactNode }> = ({
           (doc) => {
             const data = doc.data();
             if (data) {
-                // Convert the data object into an array of coin objects
-                const coinsArray = Object.keys(data).map((key) => ({
+              // Convert the data object into an array of coin objects
+              const coinsArray = Object.keys(data).map((key) => ({
                 id: key,
                 ...data[key],
-                }));
+              }));
 
               setCoins(coinsArray);
             }

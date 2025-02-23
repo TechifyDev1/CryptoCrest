@@ -1,58 +1,58 @@
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  align-items: center;
+
+  .brandname {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .auth-btn {
     display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
     align-items: center;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-weight: 500;
 
-    .brandname {
-        font-size: 1.5rem;
-        font-weight: 600;
+    .login-btn {
+      background: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 100px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: var(--primary-color);
+        color: var(--text-color);
+      }
     }
 
-    .auth-btn {
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        font-weight: 500;
+    .register-btn {
+      background: var(--primary-color);
+      color: var(--text-color);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      width: 100px;
+      transition: all 0.3s ease;
 
-        .login-btn {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--primary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100px;
-            transition: all 0.3s ease;
+      &:hover {
+        background: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+      }
 
-            &:hover {
-                background: var(--primary-color);
-                color: var(--text-color);
-            }
-        }
-
-        .register-btn {
-            background: var(--primary-color);
-            color: var(--text-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            width: 100px;
-            transition: all 0.3s ease;
-
-            &:hover {
-                background: transparent;
-                color: var(--primary-color);
-                border: 1px solid var(--primary-color);
-            }
-
-            @media (max-width: 768px) {
-                display: none;
-            }
-        }
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
+  }
 }

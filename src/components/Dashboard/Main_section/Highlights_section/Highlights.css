@@ -1,19 +1,19 @@
 .highlights-section {
-    display: flex;
-    width: 100%;
-    padding: 3rem 2rem;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
+  display: flex;
+  width: 100%;
+  padding: 3rem 2rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
 
-    div {
-        @media (max-width: 768px) {
-            width: 100%;
-            padding: 1rem;
-        }
-    }
-
+  div {
     @media (max-width: 768px) {
-        flex-direction: column;
+      width: 100%;
+      padding: 1rem;
     }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }

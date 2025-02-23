@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import MainSection from "../../components/Dashboard/Main_section/MainSection";
-import NavBar from "../../components/Dashboard/NavBar/NavBar";
-import MobileNav from "../../components/Helpers/Mobile_nav/MobileNav";
-import SideBar from "../../components/Helpers/Sidebar/SideBar";
-import MobileTopNav from "../../components/Helpers/Mobile_topnav/MobileTopNav";
-import AddTransBtn from "../../components/Helpers/Add_trans/AddTransBtn";
+import React, { useState } from 'react';
+import MainSection from '../../components/Dashboard/Main_section/MainSection';
+import NavBar from '../../components/Dashboard/NavBar/NavBar';
+import MobileNav from '../../components/Helpers/Mobile_nav/MobileNav';
+import SideBar from '../../components/Helpers/Sidebar/SideBar';
+import MobileTopNav from '../../components/Helpers/Mobile_topnav/MobileTopNav';
+import AddTransBtn from '../../components/Helpers/Add_trans/AddTransBtn';
 
 const DashboardPage: React.FC = () => {
-    const [toggleSideBar, setToggleNav] = useState<boolean>(false);
-    return (
-        <div>
-            <NavBar togglenav={setToggleNav} toggleSideBar={toggleSideBar} />
-            <MobileTopNav currentpage="Dashboard" />
-            <SideBar currentpage="dashboard" toggleNav={toggleSideBar} />
-            <MainSection toggleSideBar={toggleSideBar} />
-            <MobileNav />
-            <AddTransBtn />
-        </div>
-    );
-}
+  const [toggleSideBar, setToggleNav] = useState<boolean>(false);
+  return (
+    <div>
+      <NavBar togglenav={setToggleNav} toggleSideBar={toggleSideBar} />
+      <MobileTopNav currentpage="Dashboard" />
+      <SideBar currentpage="dashboard" toggleNav={toggleSideBar} />
+      <MainSection toggleSideBar={toggleSideBar} />
+      <MobileNav />
+      <AddTransBtn />
+    </div>
+  );
+};
 
 export default DashboardPage;

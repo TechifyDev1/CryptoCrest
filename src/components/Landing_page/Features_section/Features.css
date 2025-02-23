@@ -1,56 +1,56 @@
 .features-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  gap: 1rem;
+
+  .title {
+    font-size: xx-large;
+
+    @media (max-width: 768px) {
+      text-align: center !important;
+      font-size: 1.7rem;
+    }
+  }
+
+  .features {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    flex-direction: column;
-    padding: 1rem 2rem;
-    gap: 1rem;
+    justify-content: space-between;
 
-    .title {
-        font-size: xx-large;
+    .feature {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      background-color: var(--shade);
+      border-radius: 5px;
 
-        @media (max-width: 768px) {
-            text-align: center !important;
-            font-size: 1.7rem;
+      .feature-img {
+        height: 70%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
+      }
+
+      .descriptions {
+        height: 50%;
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
 
-    .features {
-        display: flex;
-        justify-content: space-between;
-
-        .feature {
-            display: flex;
-            flex-direction: column;
-            width: 30%;
-            text-align: center;
-            padding: 0.5rem 1rem;
-            background-color: var(--shade);
-            border-radius: 5px;
-
-            .feature-img {
-                height: 70%;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                }
-            }
-
-            .descriptions {
-                height: 50%;
-            }
-
-            @media (max-width: 768px) {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            flex-direction: column;
-            gap: 2rem;
-        }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 2rem;
     }
+  }
 }

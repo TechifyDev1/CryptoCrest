@@ -1,71 +1,71 @@
 .transaction-list {
-    width: 100%;
-    background-color: var(--bg);
-    border: 1px solid var(--secondary-color);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
+  width: 100%;
+  background-color: var(--bg);
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 
-    @media (max-width: 768px) {
-        display: none;
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background-color: var(--shade);
+
+      th {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border-bottom: 1px solid var(--secondary-color);
+      }
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-
-        thead {
-            background-color: var(--shade);
-
-            th {
-                padding: 0.75rem 1rem;
-                text-align: left;
-                font-size: 0.9rem;
-                font-weight: bold;
-                border-bottom: 1px solid var(--secondary-color);
-            }
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: var(--shade);
         }
 
-        tbody {
-            tr {
-                &:nth-child(even) {
-                    background-color: var(--shade);
-                }
-
-                &:hover {
-                    background-color: var(--shade);
-                }
-            }
-
-            td {
-                padding: 0.75rem 1rem;
-                text-align: left;
-                font-size: 0.9rem;
-                border-bottom: 1px solid var(--secondary-color);
-                cursor: pointer;
-
-                &.status {
-                    font-weight: bold;
-
-                    &.completed {
-                        color: #28a745;
-                    }
-
-                    &.pending {
-                        color: #ffc107;
-                    }
-
-                    &.failed {
-                        color: #dc3545;
-                    }
-                }
-            }
-
-            .no-data {
-                text-align: center;
-                font-style: italic;
-                padding: 1rem;
-            }
+        &:hover {
+          background-color: var(--shade);
         }
+      }
+
+      td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--secondary-color);
+        cursor: pointer;
+
+        &.status {
+          font-weight: bold;
+
+          &.completed {
+            color: #28a745;
+          }
+
+          &.pending {
+            color: #ffc107;
+          }
+
+          &.failed {
+            color: #dc3545;
+          }
+        }
+      }
+
+      .no-data {
+        text-align: center;
+        font-style: italic;
+        padding: 1rem;
+      }
     }
+  }
 }

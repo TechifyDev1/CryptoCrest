@@ -72,7 +72,9 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
     <div className="main-section" style={{ width: toggleSideBar ? '' : '90%' }}>
       <MobileTopNav currentpage="Transactions" />
       <SummarySection
-        totalTransactions={filteredTransactions ? filteredTransactions.length : [].length}
+        totalTransactions={
+          filteredTransactions ? filteredTransactions.length : [].length
+        }
         totalFees={`$${fees}`}
         balanceChange={`$${totalBalance}`}
       />

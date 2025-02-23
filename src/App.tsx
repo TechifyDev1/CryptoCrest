@@ -1,13 +1,13 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import DashboardPage from "./Pages/Dashboard_page/DashboardPage";
-import LandingPage from "./Pages/Landing_page/LandingPage";
-import LoginPage from "./Pages/Login_page/LoginPage";
-import PortFolioPage from "./Pages/Portfolio_page/PortfolioPage";
-import SettingPage from "./Pages/Setting_page/SettingPage";
-import SignUpPage from "./Pages/Signup_page/SignUpPage";
-import TransactionPage from "./Pages/Transactions_page/TransactionPage";
-import TransactionFormPage from "./Pages/TransactionForm_page/TransactionFormPage";
-import { Toaster } from "sonner";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import DashboardPage from './Pages/Dashboard_page/DashboardPage';
+import LandingPage from './Pages/Landing_page/LandingPage';
+import LoginPage from './Pages/Login_page/LoginPage';
+import PortFolioPage from './Pages/Portfolio_page/PortfolioPage';
+import SettingPage from './Pages/Setting_page/SettingPage';
+import SignUpPage from './Pages/Signup_page/SignUpPage';
+import TransactionPage from './Pages/Transactions_page/TransactionPage';
+import TransactionFormPage from './Pages/TransactionForm_page/TransactionFormPage';
+import { Toaster } from 'sonner';
 
 const App = () => {
   return (
@@ -24,21 +24,21 @@ const App = () => {
         <Route path="/portfolio" element={<PortFolioPage />} />
         <Route path="/transactions/:id?" element={<TransactionFormPage />} />
       </Routes>
-        <Toaster
-            position="top-center"
-            closeButton={true}
-            visibleToasts={2}
-            theme="system"
-            richColors={true}
-            toastOptions={{
-              style: {
-                padding: '.6rem',
-                borderRadius: '2rem',
-              },
-            }}
-          />
+      <Toaster
+        position="top-center"
+        closeButton={true}
+        visibleToasts={2}
+        theme="system"
+        richColors={true}
+        toastOptions={{
+          style: {
+            padding: '.6rem',
+            borderRadius: '2rem',
+          },
+        }}
+      />
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default App;
