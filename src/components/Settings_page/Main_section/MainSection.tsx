@@ -3,15 +3,44 @@ import { HiCamera, HiEnvelope, HiKey, HiPencil } from 'react-icons/hi2';
 import { TbToggleLeft } from 'react-icons/tb';
 import './Main.css';
 import { auth } from '../../../Firebase/firebase-init';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import EmailEdit from '../Email_edit/EmailEdit';
-import { signOut } from 'firebase/auth';
+import { signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const MainSection: React.FC = () => {
   const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('John Doe');
   const navigate = useNavigate();
+  const inputElementRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const handleClick = () => {
+    inputElementRef.current?.click();
+  }
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    try{
+      if (!file) throw new Error('No file selected');
+      const url = URL.createObjectURL(file);
+      const uploadpreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+      setImage(url);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', uploadpreset);
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
+      setImage(res.data.secure_url);
+      const user = auth.currentUser;
+      if(user) await updateProfile(user, {photoURL: res.data.secure_url});
+      else throw new Error("Unable to update profile");
+      toast.success('Profile picture updated successfully');
+    } catch(e: any) {
+      console.error(e.message);
+      toast.error('Error updating profile picture');
+    }
+  }
   const handleLogout = async () => {
     await signOut(auth)
       .then(() => {
@@ -34,10 +63,11 @@ const MainSection: React.FC = () => {
       <div className="profile-header">
         <div className="img-edit">
           <img
-            src="https://randomuser.me/api/portraits/lego/5.jpg"
+            src={auth.currentUser?.photoURL || image || "https://randomuser.me/api/portraits/lego/5.jpg"}
             alt="profile"
           />
-          <button className="edit-img">
+          <input type="file" name="image" id="image" ref={inputElementRef} style={{display: "none"}} onChange={handleFileChange} />
+          <button className="edit-img" onClick={handleClick}>
             <HiCamera size={20} style={{ color: 'var(--primary-color)' }} />
           </button>
         </div>
