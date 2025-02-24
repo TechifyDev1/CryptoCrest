@@ -4,6 +4,7 @@ import { Transaction } from '../../../../type';
 import { auth, db } from '../../../../Firebase/firebase-init';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface TransactionDetailModalProps {
   transaction: Transaction | undefined;
@@ -17,10 +18,12 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({
   openDetails,
 }) => {
 
+  const navigate = useNavigate();
   const handleDeleteTransaction = async () => {
     const username = auth.currentUser?.displayName;
     if (!username) return;
     const userRef = doc(db, "users", username);
+    const currenciesRef = doc(db, "currencies", username);
     try {
       const docSnap = await getDoc(userRef);
       const allTransactions: Transaction[] = docSnap.data()?.transactions;
@@ -29,12 +32,30 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({
       if (index === -1) throw new Error("Transaction not found");
       allTransactions.splice(index, 1);
       await setDoc(userRef, {transactions: allTransactions}, {merge: true});
+      const currencySnap = await getDoc(currenciesRef);
+      const currencyData = currencySnap.data();
+      if (!currencyData) throw new Error("No currencies found");
+      const asset = transaction?.asset?.toLowerCase();
+      if (!asset) throw new Error("Asset is undefined");
+      const currency = currencyData[asset];
+      if (!currency) throw new Error("Currency not found");
+      const updatedBalance = transaction?.type === "Buy" ? currency.balance - transaction.amount : currency.balance + transaction?.amount;
+      await setDoc(currenciesRef, {
+        [asset]: {
+          ...currency,
+          balance: updatedBalance,
+        },
+      }, {merge: true});
       onClose();
       toast.success("Transaction deleted successfully");
     } catch (error) {
       console.error("Error deleting transaction:", error);
       toast.error("Error deleting transaction");
     }
+  };
+  const handleEditTransaction = () => {
+    navigate("/transactions/" + transaction?.id);
+    onClose();
   };
   return (
     <div
@@ -82,7 +103,7 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({
           className="action-btns"
           style={{ display: 'flex', justifyContent: 'space-between' }}
         >
-          <button className="edit-btn" onClick={onClose}>
+          <button className="edit-btn" onClick={handleEditTransaction}>
             Edit
           </button>
           <button className="delete-btn" onClick={handleDeleteTransaction}>

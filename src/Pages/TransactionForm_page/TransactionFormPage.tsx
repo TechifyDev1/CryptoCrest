@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import SideBar from '../../components/Helpers/Sidebar/SideBar';
 import MobileTopNav from '../../components/Helpers/Mobile_topnav/MobileTopNav';
 import MobileNav from '../../components/Helpers/Mobile_nav/MobileNav';
@@ -10,6 +10,7 @@ import { auth, db } from '../../Firebase/firebase-init';
 import { Transaction } from '../../type';
 import AvailableCoins from './Available_coins/AvailableCoin';
 import { fetchCryptoPrice } from './fetchCryptoPrice';
+import { transactionContext } from '../../contexts/TransactionsContext';
 
 const transactionFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +24,8 @@ const transactionFormPage: React.FC = () => {
   };
 
   const navigate = useNavigate();
+  const transactionsContext = useContext(transactionContext);
+  const transactions = transactionsContext.transactions;
 
   const [formData, setFormData] = useState<Transaction>({
     id: '',
@@ -39,17 +42,14 @@ const transactionFormPage: React.FC = () => {
   useEffect(() => {
     if (id && id !== 'new') {
       const fetchTransaction = async () => {
-        const fetchedTransaction = {
-          id,
-          type: 'Buy',
-          asset: 'Bitcoin',
-          amount: 2,
-          date: '2025-01-01',
-          description: 'Description',
-          fees: 0.5,
-          status: 'Completed',
-          value: 0,
-        };
+        const fetchedTransaction = transactions.find(
+          (transaction) => transaction.id === id
+        );
+        if (!fetchedTransaction) {
+          toast.error('Transaction not found');
+          navigate('/transactions');
+          return;
+        }
         setFormData(fetchedTransaction);
       };
       fetchTransaction();
