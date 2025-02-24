@@ -50,7 +50,7 @@ const App = () => {
         <Route path="/portfolio" element={isUserLoggedIn ? (<PortFolioPage />) : (<LoginPage />)} />
         <Route path="/transactions/:id?" element={isUserLoggedIn ? (<TransactionFormPage />) : (<LoginPage />)} />
         <Route path="/unverified" element={isUserLoggedIn ? (<UnverifiedEmailPage />) : (<LoginPage />)} />
-        <Route path="/forgotten-password" element={isUserLoggedIn ? (<ForgottenPasswordPage />) : (<LoginPage />)} />
+        <Route path="/forgotten-password" element={<ForgottenPasswordPage />} />
         <Route path="/change-password" element={isUserLoggedIn ? (<ChangePasswordPage />) : (<LoginPage />)} />
         <Route path="/email-sent" element={isUserLoggedIn ? (<ResetPasswordSentPage />) : (<LoginPage />)} />
       </Routes>

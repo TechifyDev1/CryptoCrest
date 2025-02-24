@@ -98,6 +98,7 @@ const LoginPage: React.FC = () => {
         <button className="login-btn" type="submit">
           Login
         </button>
+        <p style={{marginBottom: "1rem"}}>Damn, I forgot my password <Link style={{textDecoration: "none"}} to="/forgotten-password">Reset</Link></p>
         <div className="alternative">Or Login with</div>
         <button
           className="login-google"

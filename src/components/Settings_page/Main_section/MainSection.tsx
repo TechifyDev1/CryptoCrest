@@ -6,10 +6,12 @@ import { auth } from '../../../Firebase/firebase-init';
 import { useEffect, useState } from 'react';
 import EmailEdit from '../Email_edit/EmailEdit';
 import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const MainSection: React.FC = () => {
   const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('John Doe');
+  const navigate = useNavigate();
   const handleLogout = async () => {
     await signOut(auth)
       .then(() => {
@@ -56,7 +58,7 @@ const MainSection: React.FC = () => {
           </div>
           <p>Edit Email</p>
         </div>
-        <div className="setting">
+        <div className="setting" onClick={() => navigate('/change-password')}>
           <div className="icon-div">
             <HiKey size={20} style={{ color: 'var(--primary-color)' }} />
           </div>

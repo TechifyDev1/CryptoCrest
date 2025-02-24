@@ -1,6 +1,9 @@
 import { MdCancel } from 'react-icons/md';
 import './Transaction.css';
 import { Transaction } from '../../../../type';
+import { auth, db } from '../../../../Firebase/firebase-init';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from 'sonner';
 
 interface TransactionDetailModalProps {
   transaction: Transaction | undefined;
@@ -13,6 +16,26 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({
   onClose,
   openDetails,
 }) => {
+
+  const handleDeleteTransaction = async () => {
+    const username = auth.currentUser?.displayName;
+    if (!username) return;
+    const userRef = doc(db, "users", username);
+    try {
+      const docSnap = await getDoc(userRef);
+      const allTransactions: Transaction[] = docSnap.data()?.transactions;
+      if (!allTransactions) throw new Error("No transactions found");
+      const index = allTransactions.findIndex((transaction) => transaction.id === transaction?.id);
+      if (index === -1) throw new Error("Transaction not found");
+      allTransactions.splice(index, 1);
+      await setDoc(userRef, {transactions: allTransactions}, {merge: true});
+      onClose();
+      toast.success("Transaction deleted successfully");
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+      toast.error("Error deleting transaction");
+    }
+  };
   return (
     <div
       className="transaction-detail-modal"
@@ -62,7 +85,9 @@ const TransactionDetails: React.FC<TransactionDetailModalProps> = ({
           <button className="edit-btn" onClick={onClose}>
             Edit
           </button>
-          <button className="delete-btn">Delete Transaction</button>
+          <button className="delete-btn" onClick={handleDeleteTransaction}>
+            Delete Transaction
+            </button>
         </div>
       </div>
     </div>
