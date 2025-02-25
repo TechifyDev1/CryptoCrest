@@ -21,7 +21,9 @@ const OverviewContainer: React.FC = () => {
         if (!username) throw new Error('Please sign in to view data');
 
         const userRef = doc(db, 'users', username);
+        console.log(username)
         const data = (await getDoc(userRef)).data();
+        console.log(data);
         if (!data) throw new Error('No data found');
 
         const transactions = data.transactions;

@@ -4,7 +4,7 @@ import { auth, db } from '../Firebase/firebase-init';
 import { doc, onSnapshot } from 'firebase/firestore';
 
 const CryptoContext = createContext<{
-  crypto: { asset: string; price: number; balance: number; coinId: string }[];
+  crypto: { name: string; price: number; balance: number; coinId: string }[];
 }>({
   crypto: [],
 });

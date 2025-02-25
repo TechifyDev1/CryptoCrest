@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect, useContext } from 'react';
 import './Filter.css';
 import { Transaction } from '../../../../type';
+import { CryptoContext } from '../../../../contexts/CryptoContext';
 
 const FilterSearchSection: React.FC<{
   setFilteredTransactions: Dispatch<SetStateAction<Transaction[]>>;
@@ -10,6 +11,8 @@ const FilterSearchSection: React.FC<{
   const [dateRange, setDateRange] = useState('All');
   const [assetType, setAssetType] = useState('All');
   const [transactionType, setTransactionType] = useState('All');
+  const cryptosContext = useContext(CryptoContext);
+  const cryptos = cryptosContext?.crypto;
 
   useEffect(() => {
     handleFilter();
@@ -88,9 +91,11 @@ const FilterSearchSection: React.FC<{
           className="filter-dropdown"
         >
           <option value="All">All Assets</option>
-          <option value="Bitcoin">Bitcoin</option>
-          <option value="Ethereum">Ethereum</option>
-          <option value="Others">Others</option>
+          {cryptos?.map((crypto) => (
+            <option key={crypto.coinId} value={crypto.name}>
+              {crypto.name}
+            </option>
+          ))}
         </select>
 
         <select

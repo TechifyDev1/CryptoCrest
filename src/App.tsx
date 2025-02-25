@@ -16,6 +16,7 @@ import Loading from './components/Helpers/Loading/Loading';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/firebase-init';
+import ChangeUsernamePage from './Pages/ChangeUsername_page/ChangeUsernamePage';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/forgotten-password" element={<ForgottenPasswordPage />} />
         <Route path="/change-password" element={isUserLoggedIn ? (<ChangePasswordPage />) : (<LoginPage />)} />
         <Route path="/email-sent" element={isUserLoggedIn ? (<ResetPasswordSentPage />) : (<LoginPage />)} />
+        <Route path="/update-username" element={isUserLoggedIn ? (<ChangeUsernamePage />) : (<LoginPage />)} />
       </Routes>
       <Toaster
         position="top-center"

@@ -63,7 +63,7 @@ const MainSection: React.FC = () => {
       <div className="profile-header">
         <div className="img-edit">
           <img
-            src={auth.currentUser?.photoURL || image || "https://randomuser.me/api/portraits/lego/5.jpg"}
+            src={image || auth.currentUser?.photoURL || "https://randomuser.me/api/portraits/lego/5.jpg"}
             alt="profile"
           />
           <input type="file" name="image" id="image" ref={inputElementRef} style={{display: "none"}} onChange={handleFileChange} />
