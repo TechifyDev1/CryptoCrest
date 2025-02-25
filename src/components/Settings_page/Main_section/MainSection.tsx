@@ -73,7 +73,7 @@ const MainSection: React.FC = () => {
         </div>
         <div className="username-edit">
           <h1>{username}</h1>
-          <button className="edit-username">
+          <button className="edit-username" onClick={() => navigate('/update-username')}>
             <HiPencil size={20} style={{ color: 'var(--primary-color)' }} />
           </button>
         </div>
