@@ -22,8 +22,8 @@ const ChangeUsernamePage: React.FC = () => {
     try {
         if (!currentusername) throw new Error("You are not authenticated, please login");
 
-        const userRef = doc(db, "users", currentusername);
-        const currencyRef = doc(db, "currencies", currentusername);
+        const userRef = doc(db, "users", currentusername.toLowerCase());
+        const currencyRef = doc(db, "currencies", currentusername.toLowerCase());
 
         // Get existing user data
         const userSnap = await getDoc(userRef);

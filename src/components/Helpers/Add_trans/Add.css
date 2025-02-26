@@ -18,4 +18,10 @@
   &:hover {
     background-color: var(--secondary-color-hover);
   }
+
+  @media (max-width: 768px) {
+    bottom: 20%;
+    right: 20%;
+    
+  }
 }

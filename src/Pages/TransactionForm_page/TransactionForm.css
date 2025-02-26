@@ -17,7 +17,8 @@
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 88%;
+    height: 75%;
+    top: 11%;
   }
 
   .transaction-form {

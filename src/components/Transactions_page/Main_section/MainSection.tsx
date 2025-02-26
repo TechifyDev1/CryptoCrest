@@ -46,7 +46,12 @@ const MainSection: React.FC<{ toggleSideBar: boolean }> = ({
   }, [transactionContextValue]);
 
   useEffect(() => {
-    setAssetDisptributionData(currenciesContextValue.crypto);
+    setAssetDisptributionData(
+      currenciesContextValue.crypto.map(({ name, balance }) => ({
+        asset: name,
+        value: balance,
+      }))
+    );
   }, [currenciesContextValue]);
 
   console.log(assetDistributionData);

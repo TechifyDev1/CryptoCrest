@@ -165,7 +165,7 @@ const transactionFormPage: React.FC = () => {
   return (
     <div className="transaction-form-page">
       <SideBar currentpage="new" toggleNav={true} />
-      <MobileTopNav currentpage="New" />
+      <MobileTopNav currentpage={id === "new" ? "New Transaction" : "Edit Transaction"} />
       <MobileNav />
       <main className="new-main-section">
         <form className="transaction-form" onSubmit={handleSubmit}>

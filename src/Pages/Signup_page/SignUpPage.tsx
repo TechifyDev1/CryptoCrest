@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import image from '../../assets/landing_page/signup.svg';
 import { auth, db } from '../../Firebase/firebase-init';
 import './SignUp.css';
+import { toast } from 'sonner';
 
 const SignUpPage: React.FC = () => {
   const handleSignUp = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -21,29 +22,48 @@ const SignUpPage: React.FC = () => {
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+    const toastId = toast.loading('Signing you up, please wait');
+    
     try {
+      // Check if the username already exists in Firestore (for signup)
       const userRef = doc(db, 'users', username.toLowerCase());
       const userSnap = await getDoc(userRef);
-      if (userSnap.exists())
+      if (userSnap.exists()) {
         throw new Error('Username already exists, please choose another one');
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      }
+  
+      // Create the user with Firebase Authentication
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
       const userId = user.uid;
+  
+      // Create user data object
       const userInfo = {
         username,
         email,
         userId,
       };
+  
+      // Update the display name in Firebase Authentication
       await updateProfile(user, { displayName: username });
+  
+      // Set the document in Firestore once the user is authenticated
+      // This ensures the user is authenticated before the write happens
       await setDoc(userRef, userInfo);
+  
+      toast.dismiss(toastId);
+      toast.success('You have successfully signed up');
       console.log('User created successfully');
     } catch (e: any) {
       console.error(e.message);
+      if (e.message === 'Username already exists, please choose another one') {
+        toast.error('Username already exists, please choose another one');
+      } else {
+        toast.error('Unable to sign you up, please try again');
+      }
+      toast.dismiss(toastId);
     }
   };
+  
   const handleGoogleSignUp = async () => {
     try {
       const provider = new GoogleAuthProvider();

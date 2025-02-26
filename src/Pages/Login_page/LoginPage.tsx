@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import image from '../../assets/landing_page/login.svg';
 import { auth, db } from '../../Firebase/firebase-init';
 import './Login.css';
+import { toast } from 'sonner';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -20,8 +21,10 @@ const LoginPage: React.FC = () => {
     const formData = new FormData(e.target);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
+    const toastId = toast.loading('Logging you in, please wait');
     try {
-      const userRef = doc(db, 'users', username);
+      const userRef = doc(db, 'users', username.toLowerCase());
+      console.log(username.toLowerCase());
       const usersnap = await getDoc(userRef);
       if (usersnap.exists()) {
         const user = usersnap.data();
@@ -29,10 +32,18 @@ const LoginPage: React.FC = () => {
         await signInWithEmailAndPassword(auth, email, password);
         console.log('User Logged In');
       } else {
+        toast.dismiss(toastId);
         throw new Error('Wrong Username or Password');
       }
+      toast.dismiss(toastId);
+      toast.success('You have successfully logged in');
     } catch (e: any) {
       console.log(e.message);
+      if (e.message === 'Wrong Username or Password') {
+        toast.error('Wrong Username or Password');
+      } else {
+        toast.error('An error occurred, please try again');
+      }
     }
   };
   const handleGoogleLogin = async () => {
