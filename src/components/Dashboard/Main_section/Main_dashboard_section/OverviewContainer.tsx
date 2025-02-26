@@ -53,7 +53,7 @@ const OverviewContainer: React.FC = () => {
     };
 
     fetchMarketData();
-  }, []);
+  }, [cryptos]);
 
   const options = {
     title: {
