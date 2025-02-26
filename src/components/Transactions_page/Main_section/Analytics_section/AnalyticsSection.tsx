@@ -29,7 +29,7 @@ const AnalyticsSection: React.FC<{
     };
 
     checkReadiness();
-  }, []);
+  }, [chartContainer1, chartContainer2, assetDistributionData]);
   const trendsOptions = {
     title: {
       text: 'Transaction Trends',
@@ -63,8 +63,8 @@ const AnalyticsSection: React.FC<{
         radius: ['40%', '70%'],
         data: assetDistributionData
           .map((data) => ({
-            value: parseFloat(`${data.balance}`),
-            name: data.name,
+            value: parseFloat(`${data.value}`),
+            name: data.asset,
           }))
           .filter((item) => item.value > 0),
         emphasis: {
