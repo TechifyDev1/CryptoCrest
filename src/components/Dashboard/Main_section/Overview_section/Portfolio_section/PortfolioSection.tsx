@@ -19,7 +19,7 @@ const PortfolioSection: React.FC = () => {
       transactionsContext.transactions?.reduce((acc: any, curr: any) => {
         if (curr.type.toLowerCase() != 'buy') {
           console.log(curr.value, typeof curr.value);
-          return (acc + Number(curr.value)).toFixed(2);
+          return Number(acc + Number(curr.value)).toFixed(2);
         } else {
           return acc;
         }
