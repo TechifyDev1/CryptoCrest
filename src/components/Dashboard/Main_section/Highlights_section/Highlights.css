@@ -4,7 +4,7 @@
   padding: 3rem 2rem;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
 
   div {
     @media (max-width: 768px) {
@@ -15,5 +15,6 @@
 
   @media (max-width: 768px) {
     flex-direction: column;
+    background-color: var(--secondary-color);
   }
 }
