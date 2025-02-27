@@ -27,6 +27,7 @@ const SignUpPage: React.FC = () => {
     try {
       // Check if the username already exists in Firestore (for signup)
       const userRef = doc(db, 'users', username.toLowerCase());
+      const currencyRef = doc(db, 'currencies', username.toLowerCase());
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         throw new Error('Username already exists, please choose another one');
@@ -49,6 +50,7 @@ const SignUpPage: React.FC = () => {
       // Set the document in Firestore once the user is authenticated
       // This ensures the user is authenticated before the write happens
       await setDoc(userRef, userInfo);
+      await setDoc(currencyRef, {});
   
       toast.dismiss(toastId);
       toast.success('You have successfully signed up');
