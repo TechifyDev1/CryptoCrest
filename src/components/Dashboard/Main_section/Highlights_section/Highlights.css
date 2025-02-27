@@ -4,7 +4,7 @@
   padding: 3rem 2rem;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
 
   div {
     @media (max-width: 768px) {
