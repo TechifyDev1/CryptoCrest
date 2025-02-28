@@ -51,8 +51,8 @@ const transactionFormPage: React.FC = () => {
           return;
         }
         setFormData(fetchedTransaction);
-      };
-      fetchTransaction();
+        fetchTransaction();
+      }
     }
   }, [id]);
 
@@ -199,22 +199,23 @@ const transactionFormPage: React.FC = () => {
             type="number"
             name="amount"
             placeholder="Amount"
-            value={formData.amount}
+            value={formData.amount === 0 ? '' : formData.amount}
             onChange={handleChange}
             required
           />
           <input
             type="date"
             name="date"
-            value={formData.date}
+            value={formData.date === '' ? '' : formData.date}
             onChange={handleChange}
+            placeholder="Date of Transaction"
             required
           />
           <input
             type="number"
             name="fees"
             placeholder="Fees"
-            value={formData.fees}
+            value={formData.fees === 0 ? '' : formData.fees}
             onChange={handleChange}
             required
           />

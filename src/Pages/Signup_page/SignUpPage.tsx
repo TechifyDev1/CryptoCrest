@@ -64,9 +64,11 @@ const SignUpPage: React.FC = () => {
       }
       toast.dismiss(toastId);
     }
+    toast.dismiss(toastId);
   };
   
   const handleGoogleSignUp = async () => {
+    const toastId = toast.loading('Signing you up, please wait');
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
@@ -93,6 +95,7 @@ const SignUpPage: React.FC = () => {
       }
       console.error(e.message);
     }
+    toast.dismiss(toastId);
   };
   return (
     <div className="sign-up-page">
