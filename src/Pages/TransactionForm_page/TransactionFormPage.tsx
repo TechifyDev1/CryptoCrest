@@ -71,7 +71,7 @@ const transactionFormPage: React.FC = () => {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.loading('Loading...');
+    const toastId = toast.loading('Loading...');
 
     if (
       formData.type &&
@@ -150,16 +150,18 @@ const transactionFormPage: React.FC = () => {
               );
             }
           });
-
+          toast.dismiss(toastId);
           toast.success('Transaction added successfully');
           navigate('/transactions');
         } catch (e: any) {
+          toast.dismiss(toastId);
           toast.error(e.message || 'An unexpected error occurred');
         }
       } else {
         console.log('Updating transaction:', formData);
       }
     }
+    toast.dismiss(toastId);
   };
 
   return (
