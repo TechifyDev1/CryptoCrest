@@ -4,14 +4,12 @@ import { TbToggleLeft } from 'react-icons/tb';
 import './Main.css';
 import { auth } from '../../../Firebase/firebase-init';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import EmailEdit from '../Email_edit/EmailEdit';
 import { signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 const MainSection: React.FC = () => {
-  const [toggleEmailEdit, setToggleEmailEdit] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('John Doe');
   const navigate = useNavigate();
   const inputElementRef = useRef<HTMLInputElement>(null);
@@ -81,7 +79,7 @@ const MainSection: React.FC = () => {
       <div className="main-settings">
         <div
           className="setting"
-          onClick={() => setToggleEmailEdit((prev) => !prev)}
+          onClick={() => navigate('/update-email')}
         >
           <div className="icon-div">
             <HiEnvelope size={20} style={{ color: 'var(--primary-color)' }} />
@@ -106,7 +104,6 @@ const MainSection: React.FC = () => {
           </div>
           <p>Logout</p>
         </div>
-        <EmailEdit toggleEmailEdit={toggleEmailEdit} />
       </div>
     </div>
   );

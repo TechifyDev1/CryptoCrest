@@ -6,12 +6,10 @@ import {
   updatePassword,
 } from 'firebase/auth';
 import './email-edit.css';
-import { auth } from '../../../Firebase/firebase-init';
+import { auth } from '../../Firebase/firebase-init';
 import { ChangeEvent } from 'react';
 import { toast } from 'sonner';
-const EmailEdit: React.FC<{ toggleEmailEdit: boolean }> = ({
-  toggleEmailEdit,
-}) => {
+const EmailEdit: React.FC = ({}) => {
   const handleChangeEmail = async (
     e: ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -63,9 +61,9 @@ const EmailEdit: React.FC<{ toggleEmailEdit: boolean }> = ({
   return (
     <div
       className="email-edit-container"
-      style={{ transform: toggleEmailEdit ? '' : 'translateY(100%)' }}
     >
       <form className="email-edit-form" onSubmit={handleChangeEmail}>
+        <h2 style={{width: "100%", textAlign: "center", marginBottom: "1rem"}}>Update your email</h2>
         <input
           type="email"
           name="oldEmail"

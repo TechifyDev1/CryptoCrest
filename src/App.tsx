@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/firebase-init';
 import ChangeUsernamePage from './Pages/ChangeUsername_page/ChangeUsernamePage';
+import EmailEdit from './Pages/Email_edit/EmailEdit';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +56,7 @@ const App = () => {
         <Route path="/change-password" element={isUserLoggedIn ? (<ChangePasswordPage />) : (<LoginPage />)} />
         <Route path="/email-sent" element={isUserLoggedIn ? (<ResetPasswordSentPage />) : (<LoginPage />)} />
         <Route path="/update-username" element={isUserLoggedIn ? (<ChangeUsernamePage />) : (<LoginPage />)} />
+        <Route path="/update-email" element={isUserLoggedIn ? (<EmailEdit />) : (<LoginPage />)} />
       </Routes>
       <Toaster
         position="top-center"

@@ -1,21 +1,25 @@
 .email-edit-container {
   display: flex;
-  position: fixed;
-  bottom: 6px;
-  right: 1rem;
-  width: 79%;
   background-color: var(--bg);
   flex-direction: column;
   align-items: center;
   padding: 1rem 2rem;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  transition: all 0.3s ease-in;
-  z-index: 1000000;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  @media (max-width: 768px) {
-    width: 90%;
-    margin-right: 0px !important;
+  form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+    border-radius: 20px;
+    margin: 1rem;
   }
 
   input,
