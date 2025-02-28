@@ -1,15 +1,26 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import './Navbar.css';
 import { auth } from '../../../Firebase/firebase-init';
 import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const NavBar: React.FC<{
   togglenav: Dispatch<SetStateAction<boolean>>;
   toggleSideBar: boolean;
 }> = ({ togglenav, toggleSideBar }) => {
+  const [googlePhotoUrl, setGoolePhotoUrl] = useState<string | null>('');
+  const [username, setUsername] = useState<string>('');
   const navigate = useNavigate();
-  const googlePhotoUrl = auth.currentUser?.photoURL || 'https://randomuser.me/api/portraits/lego/5.jpg';
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setGoolePhotoUrl(user.photoURL);
+        setUsername(user.displayName || '');
+      }
+    });
+    unsub();
+  }, []);
   return (
     <nav className="top-nav" style={{ width: toggleSideBar ? '' : '90%' }}>
       <div onClick={() => togglenav((prev) => !prev)} className="menu-icon">
@@ -20,8 +31,8 @@ const NavBar: React.FC<{
         />
       </div>
       <div className="profile-info" onClick={() => navigate('/settings')} style={{cursor: "pointer"}}>
-          <img src={googlePhotoUrl} alt="profile" style={{borderRadius: "50%", height: "2rem", width: "2rem"}} />
-        <span className="username">{auth.currentUser?.displayName || "User"}</span>
+          <img src={googlePhotoUrl || "https://www.gravatar.com/avatar/"} alt="profile" style={{borderRadius: "50%", height: "2rem", width: "2rem"}} />
+        <span className="username">{username || "User"}</span>
       </div>
     </nav>
   );
