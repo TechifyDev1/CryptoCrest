@@ -152,7 +152,7 @@ const transactionFormPage: React.FC = () => {
           });
           toast.dismiss(toastId);
           toast.success('Transaction added successfully');
-          navigate('/transactions');
+          navigate('/dashboard');
         } catch (e: any) {
           toast.dismiss(toastId);
           toast.error(e.message || 'An unexpected error occurred');
