@@ -71,7 +71,7 @@ const transactionFormPage: React.FC = () => {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const toastId = toast.loading('Loading...');
+    const toastId = toast.loading(id === 'new' ? 'Adding transaction...' : 'Updating transaction...');
 
     if (
       formData.type &&
