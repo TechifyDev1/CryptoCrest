@@ -11,11 +11,13 @@ import { Transaction } from '../../type';
 import AvailableCoins from './Available_coins/AvailableCoin';
 import { fetchCryptoPrice } from './fetchCryptoPrice';
 import { transactionContext } from '../../contexts/TransactionsContext';
+import { fetchFees } from '../../Tatum/FetchFees';
 
 const transactionFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [showAvailableCoins, setShowAvailableCoins] = useState(false);
   const [typedCoin, setTypedCoin] = useState('');
+  const [fees, setFees] = useState("");
 
   const handleCoinSelection = (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
@@ -56,7 +58,7 @@ const transactionFormPage: React.FC = () => {
     }
   }, [id]);
 
-  const handleChange = (
+  const handleChange = async (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
@@ -64,6 +66,8 @@ const transactionFormPage: React.FC = () => {
     if (name === 'asset') {
       setTypedCoin(value);
       setShowAvailableCoins(true);
+      const fees = await fetchFees(formData.asset);
+      setFees(fees);
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -217,9 +221,10 @@ const transactionFormPage: React.FC = () => {
             type="number"
             name="fees"
             placeholder="Fees"
-            value={formData.fees === 0 ? '' : formData.fees}
+            value={fees === null ? '' : fees}
             onChange={handleChange}
             required
+            disabled
           />
           <select name="status" value={formData.status} onChange={handleChange}>
             <option value="">Select Status</option>
