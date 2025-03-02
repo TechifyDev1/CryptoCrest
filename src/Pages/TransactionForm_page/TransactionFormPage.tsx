@@ -78,10 +78,10 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
     }
   }
 }
-const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => setAmount(parseInt(e.target.value));
-const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
-const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => setStatus(e.target.value);
-const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
+  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => setAmount(parseInt(e.target.value));
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
+  const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => setStatus(e.target.value);
+  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
