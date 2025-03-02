@@ -11,13 +11,19 @@ import { Transaction } from '../../type';
 import AvailableCoins from './Available_coins/AvailableCoin';
 import { fetchCryptoPrice } from './fetchCryptoPrice';
 import { transactionContext } from '../../contexts/TransactionsContext';
-import { fetchFees } from '../../Tatum/FetchFees';
+import { calculateFees } from '../../Tatum/calculateFees';
 
 const transactionFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [showAvailableCoins, setShowAvailableCoins] = useState(false);
   const [typedCoin, setTypedCoin] = useState('');
-  const [fees, setFees] = useState("");
+  const [fees, setFees] = useState<number | string>("");
+  const [transactionsType, setTransactionType] = useState<string>("");
+  const [asset, setAsset] = useState<string>("");
+  const [amount, setAmount] = useState<number>(0);
+  const [date, setDate] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const handleCoinSelection = (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
@@ -58,20 +64,24 @@ const transactionFormPage: React.FC = () => {
     }
   }, [id]);
 
-  const handleChange = async (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-
-    if (name === 'asset') {
-      setTypedCoin(value);
-      setShowAvailableCoins(true);
-      const fees = await fetchFees(formData.asset);
-      setFees(fees);
+const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => setTransactionType(e.target.value);
+const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  setAsset(e.target.value);
+  try {
+    const cryptoInfo = await fetchCryptoPrice(e.target.value);
+    setFees(calculateFees(cryptoInfo.price));
+  } catch (error: any) {
+    if (error.response && error.response.status === 429) {
+      toast.error('Too many requests. Please try again later.');
+    } else {
+      toast.error('Failed to fetch crypto price. Please try again.');
     }
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  }
+}
+const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => setAmount(parseInt(e.target.value));
+const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => setDate(e.target.value);
+const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => setStatus(e.target.value);
+const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -180,8 +190,8 @@ const transactionFormPage: React.FC = () => {
           </h3>
           <select
             name="type"
-            value={formData.type}
-            onChange={handleChange}
+            value={transactionsType}
+            onChange={handleTypeChange}
             required
           >
             <option value="">Select Type</option>
@@ -192,8 +202,8 @@ const transactionFormPage: React.FC = () => {
             type="text"
             name="asset"
             placeholder="Asset (e.g., Bitcoin)"
-            value={formData.asset}
-            onChange={handleChange}
+            value={asset}
+            onChange={handleAssetChange}
             required
           />
           <AvailableCoins
@@ -205,15 +215,15 @@ const transactionFormPage: React.FC = () => {
             type="number"
             name="amount"
             placeholder="Amount"
-            value={formData.amount === 0 ? '' : formData.amount}
-            onChange={handleChange}
+            value={amount === 0 ? '' : amount}
+            onChange={handleAmountChange}
             required
           />
           <input
             type="date"
             name="date"
-            value={formData.date === '' ? '' : formData.date}
-            onChange={handleChange}
+            value={date === '' ? '' : date}
+            onChange={handleDateChange}
             placeholder="Date of Transaction"
             required
           />
@@ -222,11 +232,11 @@ const transactionFormPage: React.FC = () => {
             name="fees"
             placeholder="Fees"
             value={fees === null ? '' : fees}
-            onChange={handleChange}
+            onChange={handleAmountChange}
             required
             disabled
           />
-          <select name="status" value={formData.status} onChange={handleChange}>
+          <select name="status" value={status} onChange={handleStatusChange}>
             <option value="">Select Status</option>
             <option value="Completed">Completed</option>
             <option value="Pending">Pending</option>
@@ -235,8 +245,8 @@ const transactionFormPage: React.FC = () => {
           <textarea
             name="description"
             placeholder="Description"
-            value={formData.description}
-            onChange={handleChange}
+            value={description}
+            onChange={handleDescriptionChange}
             required
           ></textarea>
           <button type="submit">
