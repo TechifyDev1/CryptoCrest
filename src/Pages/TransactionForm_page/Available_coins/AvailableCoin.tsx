@@ -16,7 +16,7 @@ const AvailableCoins: React.FC<AvailableCoinsProps> = ({
   const [matchedCoins, setMatchedCoins] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!typedCoin) {
+    if (!typedCoin && typedCoin.length < 4) {
       setMatchedCoins([]);
       return;
     }

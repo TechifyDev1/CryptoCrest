@@ -24,10 +24,12 @@ const transactionFormPage: React.FC = () => {
   const [date, setDate] = useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [value, setValue] = useState<number>(0);
 
   const handleCoinSelection = (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
     setTypedCoin(coin);
+    setAsset(coin)
     setShowAvailableCoins(false);
   };
 
@@ -61,14 +63,31 @@ const transactionFormPage: React.FC = () => {
         setFormData(fetchedTransaction);
         fetchTransaction();
       }
+    } else {
+      setFormData(
+        {
+          id: Date.now().toString(),
+          type: transactionsType,
+          asset: asset,
+          amount: amount,
+          date: date.toString(),
+          description: description,
+          fees: typeof fees === 'string' ? parseFloat(fees) : fees,
+          status: status,
+          value: value,
+        }
+      )
     }
-  }, [id]);
+  }, [id, fees, amount, date, status, value, description, asset, transactionsType]);
 
 const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => setTransactionType(e.target.value);
 const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
   setAsset(e.target.value);
+  handleCoinSelection(e.target.value);
+  setShowAvailableCoins(true);
   try {
     const cryptoInfo = await fetchCryptoPrice(e.target.value);
+    if (!cryptoInfo) throw new Error("Error")
     setFees(calculateFees(cryptoInfo.price));
   } catch (error: any) {
     if (error.response && error.response.status === 429) {
@@ -86,43 +105,46 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const toastId = toast.loading(id === 'new' ? 'Adding transaction...' : 'Updating transaction...');
-
-    if (
-      formData.type &&
-      formData.asset &&
-      formData.amount > 0 &&
-      formData.date
-    ) {
+  
+    if (formData.type && formData.asset && formData.amount > 0 && formData.date) {
       if (id === 'new') {
         if (!formData.asset || typeof formData.asset !== 'string') {
           toast.error('Invalid asset selected');
           return;
         }
-        const { price, coinId, img, symbol } = await fetchCryptoPrice(
-          formData.asset
-        );
-        console.log(price);
-        if (!price && !coinId) throw new Error('Please try again');
+  
+        // Fetch price details
+        const result = await fetchCryptoPrice(formData.asset);
+        
+        if (!result) {
+          toast.error('Failed to fetch crypto price, please try again.');
+          return;
+        }
+  
+        const { price, coinId, img, symbol } = result;
+  
+        setValue(price);
+  
         const newTransaction = {
           ...formData,
           id: Date.now().toString(),
           value: price * formData.amount,
         };
+  
         const username = auth.currentUser?.displayName?.toLowerCase();
-
         if (!username) {
           toast.error("You're not authenticated");
           return;
         }
-
+  
         const userRef = doc(db, 'users', username);
         const currencyRef = doc(db, 'currencies', username);
-
+  
         try {
           await updateDoc(userRef, {
             transactions: arrayUnion(newTransaction),
           });
-
+  
           await runTransaction(db, async (transaction) => {
             const currencySnapshot = await transaction.get(currencyRef);
             const currencyDoc = currencySnapshot.data();
@@ -132,7 +154,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
                 formData.type === 'Buy'
                   ? Number(currency.balance) + Number(formData.amount)
                   : Number(currency.balance) - Number(formData.amount);
-
+  
               transaction.set(
                 currencyRef,
                 {
@@ -164,6 +186,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
               );
             }
           });
+  
           toast.dismiss(toastId);
           toast.success('Transaction added successfully');
           navigate('/dashboard');
@@ -174,9 +197,12 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
       } else {
         console.log('Updating transaction:', formData);
       }
+    } else {
+      console.log('Something happened');
     }
     toast.dismiss(toastId);
   };
+  
 
   return (
     <div className="transaction-form-page">
