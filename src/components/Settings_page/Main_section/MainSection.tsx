@@ -42,9 +42,11 @@ const MainSection: React.FC = () => {
   const handleLogout = async () => {
     await signOut(auth)
       .then(() => {
-        console.log('Logged out successfully');
+        toast.success("You've successfully logged out")
+        console.log('User Logged out successfully');
       })
       .catch((e) => {
+        toast.error("Error logging you out")
         console.error(e);
       });
   };
