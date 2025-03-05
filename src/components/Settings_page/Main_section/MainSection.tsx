@@ -8,12 +8,20 @@ import { signOut, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useTheme } from '../../../contexts/ThemeContext';
 
 const MainSection: React.FC = () => {
   const [username, setUsername] = useState<string>('John Doe');
   const navigate = useNavigate();
   const inputElementRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string | null>(null);
+
+  const { theme, toggleTheme } = useTheme();
+  const handleThemeChange = () => {
+    console.log(theme);
+    toggleTheme();
+    console.log(theme);
+  };
   const handleClick = () => {
     inputElementRef.current?.click();
   }
@@ -94,7 +102,7 @@ const MainSection: React.FC = () => {
           </div>
           <p>Change Password</p>
         </div>
-        <div className="setting">
+        <div className="setting" onClick={handleThemeChange}>
           <div className="icon-div">
             <TbToggleLeft size={20} style={{ color: 'var(--primary-color)' }} />
           </div>

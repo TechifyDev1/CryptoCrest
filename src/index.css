@@ -1,12 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 :root {
+    --text-color: rgb(180, 180, 180);
+    --bg: rgb(11, 11, 11);
+    --primary-color: rgba(21, 147, 230, 1);
+    --primary-color-dark: rgba(21, 147, 230, 0.8);
+    --secondary-color: rgba(196, 148, 240, 0.2);
+    --secondary-color-hover: rgba(196, 148, 240, 0.5);
+    --shade: rgb(20, 20, 20);
+    --transition-speed: 400ms;
+  
+}
+.dark {
+  --text-color: rgb(180, 180, 180);
+  --bg: rgb(10, 10, 10);
+  --primary-color: rgb(138, 43, 226);
+  --secondary-color: rgba(196, 148, 240, 0.2);
+  --shade: rgb(20, 20, 20);
+}
+
+.light {
   --text-color: rgb(80, 80, 80);
   --bg: rgb(250, 250, 250);
-  --primary-color: rgba(21, 147, 230, 1);
-  --primary-color-dark: rgba(21, 147, 230, 0.8);
-  --secondary-color: rgba(21, 147, 230, 0.5);
-  --secondary-color-hover: rgba(21, 147, 230, 0.8);
+  --primary-color: rgb(138, 46, 226);
+  --secondary-color: rgba(196, 148, 240, 0.5);
   --shade: rgb(230, 230, 230);
 }
 
@@ -32,16 +49,8 @@ body {
     filter: opacity(0.2);
   }
 }
-
-/*** system based theme  ***/
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: rgb(180, 180, 180);
-    --bg: rgb(11, 11, 11);
-    --primary-color: rgba(21, 147, 230, 1);
-    --primary-color-dark: rgba(21, 147, 230, 0.8);
-    --secondary-color: rgba(196, 148, 240, 0.2);
-    --secondary-color-hover: rgba(196, 148, 240, 0.5);
-    --shade: rgb(20, 20, 20);
+@keyframes dim {
+  50% {
+    background-color: var(--bg);
   }
 }
