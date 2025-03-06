@@ -14,7 +14,7 @@
 .dark {
   --text-color: rgb(180, 180, 180);
   --bg: rgb(10, 10, 10);
-  --primary-color: rgb(138, 43, 226);
+  --primary-color: rgba(21, 147, 230, 1);
   --secondary-color: rgba(196, 148, 240, 0.2);
   --shade: rgb(20, 20, 20);
 }
