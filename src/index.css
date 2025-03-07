@@ -5,7 +5,7 @@
     --bg: rgb(11, 11, 11);
     --primary-color: rgba(21, 147, 230, 1);
     --primary-color-dark: rgba(21, 147, 230, 0.8);
-    --secondary-color: rgba(196, 148, 240, 0.2);
+    --secondary-color: rgba(21, 147, 230, 0.2);
     --secondary-color-hover: rgba(196, 148, 240, 0.5);
     --shade: rgb(20, 20, 20);
     --transition-speed: 400ms;
@@ -15,7 +15,7 @@
   --text-color: rgb(180, 180, 180);
   --bg: rgb(10, 10, 10);
   --primary-color: rgba(21, 147, 230, 1);
-  --secondary-color: rgba(196, 148, 240, 0.2);
+  --secondary-color: rgba(21, 147, 230, 0.2);
   --shade: rgb(20, 20, 20);
 }
 
