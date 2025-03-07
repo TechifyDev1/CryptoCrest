@@ -26,11 +26,15 @@ const transactionFormPage: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [value, setValue] = useState<number>(0);
 
-  const handleCoinSelection = (coin: string) => {
+  const handleCoinSelection = async (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
     setTypedCoin(coin);
     setAsset(coin)
     setShowAvailableCoins(false);
+    const cryptoInfo = await fetchCryptoPrice(asset);
+    const price = cryptoInfo?.price;
+    if (!price) return;
+    setFees(calculateFees(price));
   };
 
   const navigate = useNavigate();
@@ -94,6 +98,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
       toast.error('Too many requests. Please try again later.');
     } else {
       toast.error('Failed to fetch crypto price. Please try again.');
+      console.log(error.message)
     }
   }
 }
