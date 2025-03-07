@@ -100,7 +100,7 @@
     .setting {
       width: 100%;
       display: flex;
-      border-bottom: 1px solid var(--secondary-color-hover);
+      border-bottom: 1px solid var(--primary-color);
       align-items: center;
       padding: 1rem;
       gap: 1rem;

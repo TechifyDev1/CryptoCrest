@@ -14,8 +14,8 @@ const OverviewContainer: React.FC = () => {
 
   useEffect(() => {
     const fetchMarketData = async () => {
+      if (fetchedRef.current) return;
       try {
-        if (fetchedRef.current) return;
 
         const allCryptosIds = cryptos.map((crypto) => crypto.coinId);
         if (allCryptosIds.length === 0) throw new Error("No cryptos available");
