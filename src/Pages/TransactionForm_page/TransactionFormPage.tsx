@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import SideBar from '../../components/Helpers/Sidebar/SideBar';
 import MobileTopNav from '../../components/Helpers/Mobile_topnav/MobileTopNav';
 import MobileNav from '../../components/Helpers/Mobile_nav/MobileNav';
@@ -25,6 +25,7 @@ const transactionFormPage: React.FC = () => {
   const [status, setStatus] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [value, setValue] = useState<number>(0);
+  const fetchedRef = useRef<boolean>(false);
 
   const handleCoinSelection = async (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
@@ -54,35 +55,38 @@ const transactionFormPage: React.FC = () => {
   });
 
   useEffect(() => {
-    if (id && id !== 'new') {
+    if (id && id !== "new") {
       const fetchTransaction = async () => {
         const fetchedTransaction = transactions.find(
           (transaction) => transaction.id === id
         );
         if (!fetchedTransaction) {
-          toast.error('Transaction not found');
-          navigate('/transactions');
+          toast.error("Transaction not found");
+          navigate("/transactions");
           return;
         }
+        console.log("Fetched Transaction:", fetchedTransaction);
+        
         setFormData(fetchedTransaction);
-        fetchTransaction();
-      }
+      };
+  
+      fetchTransaction();
     } else {
-      setFormData(
-        {
-          id: Date.now().toString(),
-          type: transactionsType,
-          asset: asset,
-          amount: amount,
-          date: date.toString(),
-          description: description,
-          fees: typeof fees === 'string' ? parseFloat(fees) : fees,
-          status: status,
-          value: value,
-        }
-      )
+      setFormData({
+        id: Date.now().toString(),
+        type: transactionsType,
+        asset: asset,
+        amount: amount,
+        date: date.toString(),
+        description: description,
+        fees: typeof fees === "string" ? parseFloat(fees) : fees,
+        status: status,
+        value: value,
+      });
     }
-  }, [id, fees, amount, date, status, value, description, asset, transactionsType]);
+  }, [id, fees, amount, date, status, value, description, asset, transactionsType, transactions, navigate]);
+
+  
 
 const handleTypeChange = (e: ChangeEvent<HTMLSelectElement>) => setTransactionType(e.target.value);
 const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -221,7 +225,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
           </h3>
           <select
             name="type"
-            value={transactionsType}
+            value={formData.type || transactionsType}
             onChange={handleTypeChange}
             required
           >
@@ -233,7 +237,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
             type="text"
             name="asset"
             placeholder="Asset (e.g., Bitcoin)"
-            value={asset}
+            value={formData.asset || asset}
             onChange={handleAssetChange}
             required
           />
@@ -246,14 +250,14 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
             type="number"
             name="amount"
             placeholder="Amount"
-            value={amount === 0 ? '' : amount}
+            value={formData.amount || amount === 0 ? '' : amount}
             onChange={handleAmountChange}
             required
           />
           <input
             type="date"
             name="date"
-            value={date === '' ? '' : date}
+            value={formData.date || date === '' ? '' : date}
             onChange={handleDateChange}
             placeholder="Date of Transaction"
             required
@@ -262,12 +266,12 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
             type="number"
             name="fees"
             placeholder="Fees"
-            value={fees === null ? '' : fees}
+            value={formData.fees || fees === null ? '' : fees}
             onChange={handleAmountChange}
             required
             disabled
           />
-          <select name="status" value={status} onChange={handleStatusChange}>
+          <select name="status" value={formData.status || status} onChange={handleStatusChange}>
             <option value="">Select Status</option>
             <option value="Completed">Completed</option>
             <option value="Pending">Pending</option>
@@ -276,7 +280,7 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
           <textarea
             name="description"
             placeholder="Description"
-            value={description}
+            value={formData.description || description}
             onChange={handleDescriptionChange}
             required
           ></textarea>

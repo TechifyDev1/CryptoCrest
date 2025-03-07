@@ -18,7 +18,7 @@ const OverviewContainer: React.FC = () => {
       try {
 
         const allCryptosIds = cryptos.map((crypto) => crypto.coinId);
-        if (allCryptosIds.length === 0) throw new Error("No cryptos available");
+        if (allCryptosIds.length === 0) throw new Error("You have no available crypto");
 
         let marketData: { [key: string]: number[] } = {};
         let commonDates: string[] = [];
@@ -47,8 +47,13 @@ const OverviewContainer: React.FC = () => {
         toast.success("Market data fetched successfully");
         fetchedRef.current = true;
       } catch (error: any) {
+        if (error.message === "You have no available crypto") {
+          toast.warning(error.message);
+          return;
+        }
         console.log(error.message);
         toast.error("Error fetching market data");
+        fetchedRef.current = true;
       }
     };
 
