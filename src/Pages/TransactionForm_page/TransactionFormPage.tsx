@@ -292,5 +292,5 @@ const handleAssetChange = async (e: ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
-
+//Export the transacion form page
 export default transactionFormPage;
