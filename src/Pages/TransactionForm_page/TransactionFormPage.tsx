@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import SideBar from '../../components/Helpers/Sidebar/SideBar';
 import MobileTopNav from '../../components/Helpers/Mobile_topnav/MobileTopNav';
 import MobileNav from '../../components/Helpers/Mobile_nav/MobileNav';
@@ -25,7 +25,6 @@ const transactionFormPage: React.FC = () => {
   const [status, setStatus] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [value, setValue] = useState<number>(0);
-  const fetchedRef = useRef<boolean>(false);
 
   const handleCoinSelection = async (coin: string) => {
     setFormData((prev) => ({ ...prev, asset: coin }));
