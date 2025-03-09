@@ -14,6 +14,7 @@ import { transactionContext } from '../../contexts/TransactionsContext';
 import { calculateFees } from '../../Tatum/calculateFees';
 
 const transactionFormPage: React.FC = () => {
+  // States
   const { id } = useParams<{ id: string }>();
   const [showAvailableCoins, setShowAvailableCoins] = useState(false);
   const [typedCoin, setTypedCoin] = useState('');
