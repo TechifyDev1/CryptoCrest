@@ -55,36 +55,47 @@ const transactionFormPage: React.FC = () => {
   });
 
   useEffect(() => {
+    // Check if there is an 'id' and it's not "new"
     if (id && id !== "new") {
+      // Define an async function to fetch the transaction
       const fetchTransaction = async () => {
+        // Find the transaction with the given id from the transactions list
         const fetchedTransaction = transactions.find(
           (transaction) => transaction.id === id
         );
+  
+        // If transaction is not found, show an error message and navigate away
         if (!fetchedTransaction) {
           toast.error("Transaction not found");
-          navigate("/transactions");
+          navigate("/transactions"); // Redirect user to the transactions page
           return;
         }
+  
         console.log("Fetched Transaction:", fetchedTransaction);
-        
+  
+        // Set the form data with the found transaction
         setFormData(fetchedTransaction);
       };
   
-      fetchTransaction();
+      fetchTransaction(); // Call the function to fetch the transaction
     } else {
+      // If 'id' is "new", initialize form with default values
       setFormData({
-        id: Date.now().toString(),
-        type: transactionsType,
-        asset: asset,
-        amount: amount,
-        date: date.toString(),
-        description: description,
-        fees: typeof fees === "string" ? parseFloat(fees) : fees,
-        status: status,
-        value: value,
+        id: Date.now().toString(), // Generate a unique ID based on timestamp
+        type: transactionsType, // Set transaction type
+        asset: asset, // Set asset
+        amount: amount, // Set amount
+        date: date.toString(), // Convert date to string format
+        description: description, // Set description
+        fees: typeof fees === "string" ? parseFloat(fees) : fees, // Ensure fees is a number
+        status: status, // Set status
+        value: value, // Set value
       });
     }
+  
+  // Dependencies array: This effect will re-run if any of these dependencies change
   }, [id, fees, amount, date, status, value, description, asset, transactionsType, transactions, navigate]);
+  
 
   
 
